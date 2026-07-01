@@ -1,0 +1,163 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { hackathons, wcc } from '@/data/site';
+
+// Full case studies for the owned/client builds. WCC is handled separately below
+// as a compact KPI card — per direction, keep its section light and focused on
+// the numbers plus the current website + automation work, not a long narrative.
+const caseStudies = [
+  {
+    name: 'Finlador',
+    role: 'Founding Engineer · equity stake',
+    year: 'Feb 2025',
+    live: 'https://finlador.com',
+    problem:
+      'Outdoor guides and outfitters running high-value hunting trips (~$5K/week) had no dedicated, trustworthy marketplace to connect with serious clients — a niche, quality-over-volume market.',
+    built:
+      'Full-stack marketplace: real-time messaging and presence (Ably), automated email notifications, role-based profiles with row-level security, SEO-friendly public profiles, cloud media uploads, and SSR auth with OAuth.',
+    // PROVISIONAL — open question in reference doc: whether any booking/transaction
+    // has occurred, or it's connection/messaging only. Framed conservatively here.
+    state:
+      '50 curated members. Positioned on quality and refinement over raw count — in this market a single connection can be worth thousands.',
+    stack: ['Next.js', 'TypeScript', 'Tailwind', 'Postgres', 'Ably', 'Cloud media'],
+  },
+  {
+    name: 'Velarisse Leather',
+    role: null,
+    year: 'Jan 2025',
+    live: 'https://velarisseleather.com',
+    problem:
+      'A handcrafted leather goods brand needed a real storefront — not a template — to sell online with proper cart, tax, and shipping handling.',
+    built:
+      'E-commerce platform with a shopping cart, real-time tax calculation, multiple shipping options, product filtering and search by category/price/attributes, and a secure payment gateway integration.',
+    state: 'Live storefront for a real client brand.',
+    stack: ['Next.js', 'TypeScript', 'Tailwind'],
+  },
+] as const;
+
+// PROVISIONAL — category-level, not specific framework/hosting names, until
+// the exact stack for the website + audit work is confirmed (knowledge-base.md).
+const wccFocus = [
+  'Website rebuild',
+  'Technical audits',
+  'Workflow automation',
+  'KPI dashboards',
+  'Systems integration',
+];
+---
+
+<BaseLayout title="Projects" description="Case studies — Finlador, Velarisse Leather, and automation + web work at Western Community College.">
+  <header class="mb-10">
+    <h1 class="text-3xl font-semibold tracking-tight">Projects</h1>
+    <p class="mt-3 text-[var(--color-ink-soft)]">
+      Real builds and delivery work, with the problem, what was built, and where it stands.
+    </p>
+  </header>
+
+  <!-- Western Community College — compact, KPI-led. Focus on the numbers plus the
+       current website + automation work rather than a long narrative. -->
+  <section class="card mb-6 p-6 sm:p-8">
+    <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+      <h2 class="text-2xl font-semibold tracking-tight">Western Community College</h2>
+      <span class="text-sm text-[var(--color-ink-faint)]">2026 — present</span>
+    </div>
+    <p class="mt-2 text-sm text-[var(--color-ink-soft)]">
+      Technical Project Coordinator — went in to automate manual tracking, ended up
+      auditing the college's internal tech stack top to bottom and taking on a full
+      public website rebuild, at a 300+ staff, ~$50M/yr institution.
+    </p>
+
+    <dl class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {
+        wcc.kpis.map((kpi) => (
+          <div class="rounded-lg bg-[var(--color-base)] p-3">
+            <dt class="text-2xl font-semibold tracking-tight text-[var(--color-ink)]">
+              {kpi.value}
+            </dt>
+            <dd class="mt-0.5 text-xs leading-snug text-[var(--color-ink-soft)]">{kpi.label}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <p class="mt-5 text-sm text-[var(--color-ink-soft)]">
+      Currently shipping a modern public website and expanding automation across teams —
+      the same technical audit that started with spreadsheets now spans the frontend,
+      backend, and hosting choices behind the college's public face.
+    </p>
+
+    <ul class="mt-4 flex flex-wrap gap-1.5 text-xs text-[var(--color-ink-faint)]">
+      {wccFocus.map((f) => <li class="rounded bg-[var(--color-base)] px-2 py-0.5">{f}</li>)}
+    </ul>
+  </section>
+
+  <div class="flex flex-col gap-6">
+    {
+      caseStudies.map((cs) => (
+        <article class="card p-6 sm:p-8">
+          <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h2 class="text-2xl font-semibold tracking-tight">{cs.name}</h2>
+            <span class="text-sm text-[var(--color-ink-faint)]">{cs.year}</span>
+          </div>
+          {cs.role && (
+            <p class="mt-1 text-sm font-medium text-[var(--color-accent-ink)]">{cs.role}</p>
+          )}
+          {cs.live && (
+            <a
+              href={cs.live}
+              rel="noopener noreferrer"
+              class="mt-1 inline-block text-sm text-[var(--color-accent-ink)] link-underline"
+            >
+              {cs.live.replace('https://', '')} ↗
+            </a>
+          )}
+
+          <dl class="mt-5 flex flex-col gap-4 text-sm leading-relaxed">
+            <div>
+              <dt class="text-xs font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
+                Problem
+              </dt>
+              <dd class="mt-1 text-[var(--color-ink-soft)]">{cs.problem}</dd>
+            </div>
+            <div>
+              <dt class="text-xs font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
+                What was built
+              </dt>
+              <dd class="mt-1 text-[var(--color-ink-soft)]">{cs.built}</dd>
+            </div>
+            <div>
+              <dt class="text-xs font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
+                Current state
+              </dt>
+              <dd class="mt-1 text-[var(--color-ink-soft)]">{cs.state}</dd>
+            </div>
+          </dl>
+
+          <ul class="mt-5 flex flex-wrap gap-1.5 text-xs text-[var(--color-ink-faint)]">
+            {cs.stack.map((s) => (
+              <li class="rounded bg-[var(--color-base)] px-2 py-0.5">{s}</li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+
+  <!-- Hackathons strip — one line each, below the main case studies (Spec §6) -->
+  <section class="mt-12">
+    <h2 class="text-sm font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
+      Hackathons
+    </h2>
+    <ul class="mt-4 flex flex-col gap-3">
+      {
+        hackathons.map((h) => (
+          <li class="flex flex-wrap items-baseline gap-x-3 border-b border-[var(--color-border)] pb-3 text-sm">
+            <span class="font-medium text-[var(--color-ink)]">{h.name}</span>
+            <span class="text-[var(--color-ink-faint)]">{h.event} · {h.year}</span>
+            <span class="w-full text-[var(--color-ink-soft)] sm:w-auto">{h.oneLiner}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

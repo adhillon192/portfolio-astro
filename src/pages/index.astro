@@ -1,0 +1,206 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BentoCard from '@/components/BentoCard.astro';
+import Icon from '@/components/Icon.astro';
+import { site, projects, credentials, contactLinks, wcc } from '@/data/site';
+
+const finlador = projects.find((p) => p.slug === 'finlador')!;
+const velarisse = projects.find((p) => p.slug === 'velarisse')!;
+---
+
+<BaseLayout title="Amardeep Dhillon — Technical Consultant" brandSuffix={false} wide>
+  <!--
+    Bento grid (Spec §5). 4 columns on desktop, single stacked column on mobile.
+    Tiles are ordered by priority so the mobile stack keeps the same reading order.
+  -->
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-4 md:auto-rows-[minmax(0,auto)]">
+    <!-- 1. Hero (largest) -->
+    <BentoCard span={2} rows={2} class="justify-between">
+      <div>
+        <div class="flex flex-wrap gap-2">
+          <span
+            class="rounded-full border border-[var(--color-border-strong)] px-2.5 py-0.5 text-xs text-[var(--color-ink-soft)]"
+          >
+            {site.location}
+          </span>
+          <span
+            class="rounded-full bg-[var(--color-accent-soft)] px-2.5 py-0.5 text-xs font-medium text-[var(--color-accent-ink)]"
+          >
+            Open to consulting
+          </span>
+        </div>
+        <h1 class="mt-6 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+          {site.name}
+        </h1>
+        <p class="mt-4 max-w-md text-lg text-[var(--color-ink-soft)] text-pretty">
+          {site.tagline}
+        </p>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="/projects"
+          class="rounded-lg bg-[var(--color-ink)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+        >
+          View work
+        </a>
+        <a
+          href="/about"
+          class="rounded-lg border border-[var(--color-border-strong)] px-4 py-2 text-sm font-medium text-[var(--color-ink)] transition-colors hover:border-[var(--color-ink)]"
+        >
+          About
+        </a>
+      </div>
+    </BentoCard>
+
+    <!-- 2. Current work / WCC — strongest tile, real visual weight -->
+    <BentoCard span={2} rows={2} eyebrow="Current work" class="justify-between">
+      <div>
+        <h2 class="text-2xl font-semibold tracking-tight">Western Community College</h2>
+        <p class="mt-2 text-sm text-[var(--color-ink-soft)]">
+          Technical Project Coordinator · leading workflow automation, a technical
+          audit of internal systems, and a public website rebuild at a 300+ staff,
+          ~$50M/yr institution.
+        </p>
+
+        <!-- KPI callouts (replaces the long paragraph) -->
+        <dl class="mt-5 grid grid-cols-2 gap-3">
+          {
+            wcc.kpis.map((kpi) => (
+              <div class="rounded-lg bg-[var(--color-base)] p-3">
+                <dt class="text-2xl font-semibold tracking-tight text-[var(--color-ink)]">
+                  {kpi.value}
+                </dt>
+                <dd class="mt-0.5 text-xs leading-snug text-[var(--color-ink-soft)]">
+                  {kpi.label}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      <!-- Technical tags (replaces the department pills) -->
+      <ul class="mt-5 flex flex-wrap gap-1.5 text-xs text-[var(--color-ink-faint)]">
+        {
+          wcc.tags.map((tag) => (
+            <li class="rounded bg-[var(--color-base)] px-2 py-0.5">{tag}</li>
+          ))
+        }
+      </ul>
+    </BentoCard>
+
+    <!-- 3. Finlador -->
+    <BentoCard span={2} eyebrow="Project" class="justify-between">
+      <div>
+        <div class="flex items-baseline justify-between gap-3">
+          <h2 class="text-xl font-semibold tracking-tight">{finlador.name}</h2>
+          <a
+            href={finlador.live}
+            rel="noopener noreferrer"
+            class="text-sm text-[var(--color-accent-ink)] link-underline"
+          >
+            finlador.com ↗
+          </a>
+        </div>
+        {
+          finlador.role && (
+            <p class="mt-1 text-xs font-medium text-[var(--color-accent-ink)]">
+              {finlador.role} · equity stake
+            </p>
+          )
+        }
+        <p class="mt-2 text-sm text-[var(--color-ink-soft)]">{finlador.oneLiner}</p>
+      </div>
+      <ul class="mt-4 flex flex-wrap gap-1.5 text-xs text-[var(--color-ink-faint)]">
+        {finlador.stack.map((s) => <li class="rounded bg-[var(--color-base)] px-2 py-0.5">{s}</li>)}
+      </ul>
+    </BentoCard>
+
+    <!-- 4. Velarisse -->
+    <BentoCard span={2} eyebrow="Project" class="justify-between">
+      <div>
+        <div class="flex items-baseline justify-between gap-3">
+          <h2 class="text-xl font-semibold tracking-tight">{velarisse.name}</h2>
+          <a
+            href={velarisse.live}
+            rel="noopener noreferrer"
+            class="text-sm text-[var(--color-accent-ink)] link-underline"
+          >
+            velarisseleather.com ↗
+          </a>
+        </div>
+        <p class="mt-2 text-sm text-[var(--color-ink-soft)]">{velarisse.oneLiner}</p>
+      </div>
+      <ul class="mt-4 flex flex-wrap gap-1.5 text-xs text-[var(--color-ink-faint)]">
+        {velarisse.stack.map((s) => <li class="rounded bg-[var(--color-base)] px-2 py-0.5">{s}</li>)}
+      </ul>
+    </BentoCard>
+
+    <!-- 5. Credentials (small) — compact badge row, not a wall (Spec §5.5) -->
+    <BentoCard eyebrow="Credentials">
+      <ul class="flex flex-wrap gap-1.5 text-xs">
+        {
+          credentials.map((c) => (
+            <li
+              class:list={[
+                'rounded-full border px-2.5 py-1',
+                c.status === 'in progress'
+                  ? 'border-dashed border-[var(--color-border-strong)] text-[var(--color-ink-faint)]'
+                  : 'border-[var(--color-border)] text-[var(--color-ink)]',
+              ]}
+            >
+              {c.label}
+              {c.status === 'in progress' && <span class="ml-1 opacity-70">· in progress</span>}
+            </li>
+          ))
+        }
+      </ul>
+    </BentoCard>
+
+    <!-- 6. Now (small) -->
+    <BentoCard eyebrow="Now">
+      <ul class="flex flex-col gap-3 text-sm text-[var(--color-ink-soft)]">
+        <li>
+          <span class="text-[var(--color-ink-faint)]">Reading</span><br />
+          <!-- PROVISIONAL — specific title not yet confirmed (Spec §9); category
+               (philosophy) is confirmed, so used here instead of a generic placeholder. -->
+          <span class="text-[var(--color-ink)]">Philosophy (title TBD)</span>
+        </li>
+        <li>
+          <span class="text-[var(--color-ink-faint)]">Next</span><br />
+          <span class="text-[var(--color-ink)]">Master's in Information Technology</span>
+        </li>
+      </ul>
+    </BentoCard>
+
+    <!-- 7. Contact / linktree (small) — icon per link -->
+    <BentoCard eyebrow="Contact">
+      <ul class="flex flex-col gap-2.5 text-sm">
+        {
+          contactLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                class="group flex items-center gap-2.5 text-[var(--color-ink)]"
+              >
+                <span class="text-[var(--color-ink-soft)] transition-colors group-hover:text-[var(--color-accent-ink)]">
+                  <Icon name={link.icon} class="h-4 w-4" />
+                </span>
+                <span class="link-underline">{link.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </BentoCard>
+
+    <!-- 8. Personality (small, lowest priority) -->
+    <BentoCard eyebrow="On repeat">
+      <!-- PROVISIONAL — Spotify "now playing" embed or a static track (Spec §5). -->
+      <p class="text-sm text-[var(--color-ink-soft)]">
+        A track goes here — a small Spotify embed or a static “on repeat” line.
+      </p>
+    </BentoCard>
+  </div>
+</BaseLayout>

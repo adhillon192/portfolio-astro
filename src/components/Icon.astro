@@ -1,0 +1,108 @@
+---
+/**
+ * Small inline icon set. Functional icons are outline (Lucide-style, one family
+ * per Spec §2). Social marks (linkedin, github) use their recognizable brand
+ * glyphs, since those read as "favicons" for contact links.
+ */
+interface Props {
+  name:
+    | 'mail'
+    | 'linkedin'
+    | 'github'
+    | 'file'
+    | 'pin'
+    | 'arrow-up-right'
+    | 'menu'
+    | 'close'
+    | 'copy'
+    | 'link';
+  class?: string;
+}
+
+const { name, class: className = 'h-5 w-5' } = Astro.props;
+
+// Outline icons share these attributes; brand glyphs override to filled.
+const outline = {
+  fill: 'none',
+  stroke: 'currentColor',
+  'stroke-width': '1.75',
+  'stroke-linecap': 'round' as const,
+  'stroke-linejoin': 'round' as const,
+};
+---
+
+{
+  name === 'mail' && (
+    <svg viewBox="0 0 24 24" class={className} {...outline} aria-hidden="true">
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="m2 7 10 6 10-6" />
+    </svg>
+  )
+}
+{
+  name === 'file' && (
+    <svg viewBox="0 0 24 24" class={className} {...outline} aria-hidden="true">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <path d="M14 2v6h6M9 13h6M9 17h6" />
+    </svg>
+  )
+}
+{
+  name === 'pin' && (
+    <svg viewBox="0 0 24 24" class={className} {...outline} aria-hidden="true">
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  )
+}
+{
+  name === 'arrow-up-right' && (
+    <svg viewBox="0 0 24 24" class={className} {...outline} aria-hidden="true">
+      <path d="M7 17 17 7M8 7h9v9" />
+    </svg>
+  )
+}
+{
+  name === 'copy' && (
+    <svg viewBox="0 0 24 24" class={className} {...outline} aria-hidden="true">
+      <rect x="9" y="9" width="12" height="12" rx="2" />
+      <path d="M5 15V5a2 2 0 0 1 2-2h10" />
+    </svg>
+  )
+}
+{
+  name === 'link' && (
+    <svg viewBox="0 0 24 24" class={className} {...outline} aria-hidden="true">
+      <path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1" />
+      <path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1" />
+    </svg>
+  )
+}
+{
+  name === 'menu' && (
+    <svg viewBox="0 0 24 24" class={className} {...outline} aria-hidden="true">
+      <path d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  )
+}
+{
+  name === 'close' && (
+    <svg viewBox="0 0 24 24" class={className} {...outline} aria-hidden="true">
+      <path d="M6 6 18 18M6 18 18 6" />
+    </svg>
+  )
+}
+{
+  name === 'linkedin' && (
+    <svg viewBox="0 0 24 24" class={className} fill="currentColor" aria-hidden="true">
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.8 0 0 .78 0 1.75v20.5C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.75V1.75C24 .78 23.2 0 22.22 0Z" />
+    </svg>
+  )
+}
+{
+  name === 'github' && (
+    <svg viewBox="0 0 24 24" class={className} fill="currentColor" aria-hidden="true">
+      <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.1 0 4.6-2.9 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z" />
+    </svg>
+  )
+}

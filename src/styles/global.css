@@ -1,0 +1,73 @@
+@import 'tailwindcss';
+
+/*
+  Design system — Palette A: "Ink & warm white" (Spec §4).
+  Neutrals for ~90%+ of the UI, exactly one accent (amber), no gradients,
+  no drop shadows beyond a subtle card border. Light mode only for v1.
+*/
+@theme {
+  /* Neutrals */
+  --color-base: #f7f5f1; /* warm off-white background */
+  --color-surface: #fffefb; /* card / raised surface */
+  --color-ink: #111113; /* primary text */
+  --color-ink-soft: #4a4a4f; /* secondary text */
+  --color-ink-faint: #8a8a8f; /* tertiary / captions */
+  --color-border: #e4e0d8; /* subtle card border */
+  --color-border-strong: #d6d1c6;
+
+  /* Single accent */
+  --color-accent: #d9a441;
+  --color-accent-ink: #8a6414; /* accent text on light bg (AA-safe) */
+  --color-accent-soft: #f6ecd6; /* accent-tinted fill */
+
+  /* Type — one family, two weights in practice */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif;
+
+  /* Radius — consistent 12–16px on cards */
+  --radius-card: 14px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-base);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Keyboard focus is visible and uses the accent (accessibility, Spec §8). */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Shared building blocks */
+@layer components {
+  .card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+  }
+
+  .link-underline {
+    text-decoration-line: underline;
+    text-decoration-color: var(--color-border-strong);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 150ms ease;
+  }
+  .link-underline:hover {
+    text-decoration-color: var(--color-accent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

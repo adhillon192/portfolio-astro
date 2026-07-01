@@ -1,0 +1,84 @@
+---
+/**
+ * SEO + social meta for every page (Spec §8): descriptive titles, description,
+ * canonical URL, Open Graph + Twitter cards for LinkedIn/social link previews,
+ * and the Google Analytics tag (Spec §2 — cert put to work on a real property).
+ *
+ * GA is gated behind PUBLIC_GA_ID so it stays out of local dev until an ID is set.
+ */
+import { site } from '@/data/site';
+import '@/styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Path to an OG image relative to site root. Defaults to the shared card. */
+  image?: string;
+  /** When true, appends " — Amardeep Dhillon" to the title. */
+  brandSuffix?: boolean;
+}
+
+const {
+  title,
+  description = site.tagline,
+  image = '/og-default.svg',
+  brandSuffix = true,
+} = Astro.props;
+
+const pageTitle = brandSuffix ? `${title} — ${site.name}` : title;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+
+const gaId = import.meta.env.PUBLIC_GA_ID;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- Fonts: one family (Inter), two weights (Spec §4) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+/>
+
+{
+  gaId && (
+    <>
+      <script
+        is:inline
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+      />
+      <script is:inline define:vars={{ gaId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', gaId);
+      </script>
+    </>
+  )
+}

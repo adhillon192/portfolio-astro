@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { site, contactLinks } from '@/data/site';
+import { projects } from '@/data/site';
+
+// Standalone shareable link page — the linktree alternative (Spec §3).
+// Decided destination is links.adhillon.net; served here as /links until the
+// subdomain DNS is configured on the host. Deliberately minimal / single-column.
+const linkRows = [
+  ...contactLinks.map((l) => ({ label: l.label, hint: l.hint, href: l.href })),
+  ...projects.map((p) => ({
+    label: p.name,
+    hint: p.live.replace('https://', ''),
+    href: p.live,
+  })),
+];
+---
+
+<BaseLayout title="Links" description="All of Amardeep Dhillon's links in one place.">
+  <div class="mx-auto max-w-md text-center">
+    <h1 class="text-2xl font-semibold tracking-tight">{site.name}</h1>
+    <p class="mt-2 text-sm text-[var(--color-ink-soft)]">{site.tagline}</p>
+
+    <ul class="mt-8 flex flex-col gap-3 text-left">
+      {
+        linkRows.map((row) => (
+          <li>
+            <a
+              href={row.href}
+              rel={row.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              class="card flex items-center justify-between px-5 py-4 transition-colors hover:border-[var(--color-ink)]"
+            >
+              <span class="font-medium text-[var(--color-ink)]">{row.label}</span>
+              <span class="text-sm text-[var(--color-ink-faint)]">{row.hint}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="mt-8">
+      <a href="/" class="text-sm text-[var(--color-ink-soft)] link-underline">← Back to site</a>
+    </p>
+  </div>
+</BaseLayout>

@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostList from '@/components/PostList.astro';
+
+// One "Writing" hub over two separate collections (toggle below). Routes stay
+// distinct (/blog/*, /journal/*) so the journal can still be gated later.
+const technical = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const personal = (await getCollection('journal', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+// Deep-link support: /writing?tab=personal opens the personal tab directly.
+const initialTab = Astro.url.searchParams.get('tab') === 'personal' ? 'personal' : 'technical';
+---
+
+<BaseLayout title="Writing" description="Technical write-ups and personal notes.">
+  <header class="mb-6">
+    <h1 class="text-3xl font-semibold tracking-tight">Writing</h1>
+    <p class="mt-3 text-[var(--color-ink-soft)]">
+      Project breakdowns and technical commentary, plus a quieter space for personal notes.
+    </p>
+  </header>
+
+  <!-- Toggle -->
+  <div
+    role="tablist"
+    aria-label="Writing sections"
+    class="mb-8 inline-flex rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] p-1 text-sm"
+  >
+    <button
+      id="tab-technical"
+      role="tab"
+      data-tab="technical"
+      aria-selected={initialTab === 'technical'}
+      aria-controls="panel-technical"
+      class="tab-btn rounded-full px-4 py-1.5 font-medium transition-colors"
+    >
+      Technical
+    </button>
+    <button
+      id="tab-personal"
+      role="tab"
+      data-tab="personal"
+      aria-selected={initialTab === 'personal'}
+      aria-controls="panel-personal"
+      class="tab-btn rounded-full px-4 py-1.5 font-medium transition-colors"
+    >
+      Journals
+    </button>
+  </div>
+
+  <section
+    id="panel-technical"
+    role="tabpanel"
+    aria-labelledby="tab-technical"
+    hidden={initialTab !== 'technical'}
+  >
+    <PostList posts={technical} base="/blog" emptyMessage="No posts published yet." />
+  </section>
+
+  <section
+    id="panel-personal"
+    role="tabpanel"
+    aria-labelledby="tab-personal"
+    hidden={initialTab !== 'personal'}
+  >
+    <PostList posts={personal} base="/journal" emptyMessage="No entries published yet." />
+  </section>
+</BaseLayout>
+
+<style>
+  .tab-btn[aria-selected='true'] {
+    background-color: var(--color-ink);
+    color: white;
+  }
+  .tab-btn[aria-selected='false'] {
+    color: var(--color-ink-soft);
+  }
+  .tab-btn[aria-selected='false']:hover {
+    color: var(--color-ink);
+  }
+</style>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const select = (name: string) => {
+    tabs.forEach((tab) => {
+      const active = tab.dataset.tab === name;
+      tab.setAttribute('aria-selected', String(active));
+      const panel = document.getElementById(`panel-${tab.dataset.tab}`);
+      if (panel) panel.hidden = !active;
+    });
+    const url = new URL(window.location.href);
+    url.searchParams.set('tab', name);
+    history.replaceState(null, '', url);
+  };
+  tabs.forEach((tab) =>
+    tab.addEventListener('click', () => select(tab.dataset.tab as string)),
+  );
+</script>

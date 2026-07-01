@@ -1,0 +1,91 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+// Career narrative (Spec §7). No military/PR intent stated on this page (Spec §7).
+const experience = [
+  {
+    role: 'Technical Project Coordinator',
+    org: 'Western Community College',
+    period: 'Mar 2026 — present',
+    detail:
+      'Cross-functional workflow automation across Admissions, Registrar, Records, Marketing, and Finance at a 300+ staff, ~$50M/yr institution. Coding, technical consulting for internal stakeholders, and project coordination.',
+  },
+  {
+    role: 'Software Developer (Casual, Remote)',
+    org: 'DentHire',
+    period: 'Jan 2026 — Apr 2026',
+    detail:
+      'Full-stack development on a dental staffing platform — job postings, candidate matching, practice management. React + Node.js, working cross-functionally with product, design, and business teams.',
+  },
+  {
+    role: 'Content Developer',
+    org: 'City of Calgary',
+    period: 'Jan 2024 — Jul 2024',
+    detail:
+      'Coordinated the operational launch of a Technology Integration Center in the Smart Cities division; liaised between city officials, tech vendors, and community stakeholders; produced AR/VR emerging-tech research and briefings for decision-makers.',
+  },
+  {
+    role: 'Campaign Lead',
+    org: 'Student Changemaker Network',
+    period: 'Sep 2023 — Sep 2024',
+    detail:
+      'Led campus sustainability initiatives, built and maintained relationships with 15+ internal and external stakeholders, and ran media and communications strategy.',
+  },
+] as const;
+---
+
+<BaseLayout title="About" description="Education, certifications, and a career narrative bridging technical execution and business problem-solving.">
+  <header class="mb-10">
+    <h1 class="text-3xl font-semibold tracking-tight">About</h1>
+    <p class="mt-4 text-lg text-[var(--color-ink-soft)] text-pretty">
+      I bridge hands-on software work and business problem-solving — coding, automation,
+      and technical consulting — most recently leading cross-functional automation at a
+      college with 300+ staff and ~$50M in annual revenue.
+    </p>
+  </header>
+
+  <section class="mb-10">
+    <h2 class="text-sm font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
+      Education
+    </h2>
+    <p class="mt-3 text-[var(--color-ink)]">
+      Bachelor of Computer Information Systems — Mount Royal University
+    </p>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-sm font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
+      Certifications
+    </h2>
+    <ul class="mt-3 flex flex-col gap-1.5 text-[var(--color-ink-soft)]">
+      <li>CompTIA Security+</li>
+      <li>Google Analytics · Google Ads</li>
+      <li>HubSpot <span class="text-sm text-[var(--color-ink-faint)]">(in progress)</span></li>
+      <li>Master's in Information Technology <span class="text-sm text-[var(--color-ink-faint)]">(planned)</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="text-sm font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
+      Experience
+    </h2>
+    <ol class="mt-4 flex flex-col gap-6">
+      {
+        experience.map((job) => (
+          <li class="border-l-2 border-[var(--color-border-strong)] pl-4">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-3">
+              <h3 class="font-medium text-[var(--color-ink)]">
+                {job.role} · {job.org}
+              </h3>
+              <span class="text-sm text-[var(--color-ink-faint)]">{job.period}</span>
+            </div>
+            <p class="mt-1.5 text-sm leading-relaxed text-[var(--color-ink-soft)]">{job.detail}</p>
+          </li>
+        ))
+      }
+    </ol>
+    {/* PROVISIONAL — Community Support Worker line (Alex Community Centre, Jul–Dec 2025)
+        intentionally omitted pending the include/exclude decision (Spec §7 / Open Items).
+        Add here as one line if the reliability/service angle is wanted. */}
+  </section>
+</BaseLayout>

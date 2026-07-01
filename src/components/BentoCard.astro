@@ -1,0 +1,47 @@
+---
+/**
+ * A single bento tile (Spec §5). Consistent radius + subtle border, generous
+ * padding, no drop shadow. `span` controls how many columns it occupies on the
+ * desktop grid; all tiles collapse to one column on mobile via the parent grid.
+ */
+interface Props {
+  span?: 1 | 2 | 3;
+  rows?: 1 | 2;
+  /** Optional label shown small + uppercase at the top of the tile. */
+  eyebrow?: string;
+  as?: 'div' | 'section';
+  class?: string;
+}
+
+const { span = 1, rows = 1, eyebrow, as = 'section', class: className = '' } = Astro.props;
+const Tag = as;
+
+const spanClass = {
+  1: 'md:col-span-1',
+  2: 'md:col-span-2',
+  3: 'md:col-span-3',
+}[span];
+
+const rowClass = {
+  1: 'md:row-span-1',
+  2: 'md:row-span-2',
+}[rows];
+---
+
+<Tag
+  class:list={[
+    'card flex flex-col p-6',
+    spanClass,
+    rowClass,
+    className,
+  ]}
+>
+  {
+    eyebrow && (
+      <p class="mb-3 text-xs font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
+        {eyebrow}
+      </p>
+    )
+  }
+  <slot />
+</Tag>

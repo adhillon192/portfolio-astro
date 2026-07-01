@@ -1,0 +1,27 @@
+---
+import { site, contactLinks } from '@/data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-20 border-t border-[var(--color-border)]">
+  <div
+    class="mx-auto flex max-w-5xl flex-col gap-3 px-5 py-8 text-sm text-[var(--color-ink-soft)] sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p>© {year} {site.name}</p>
+    <ul class="flex flex-wrap gap-x-5 gap-y-1">
+      {
+        contactLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="link-underline hover:text-[var(--color-ink)]"
+              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>

@@ -1,0 +1,44 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: (CollectionEntry<'blog'> | CollectionEntry<'journal'>)[];
+  /** Base path for links, e.g. "/blog" or "/journal". */
+  base: string;
+  emptyMessage: string;
+}
+
+const { posts, base, emptyMessage } = Astro.props;
+
+const fmt = (d: Date) =>
+  new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: 'short', day: 'numeric' }).format(d);
+---
+
+{
+  posts.length === 0 ? (
+    <p class="rounded-lg border border-dashed border-[var(--color-border-strong)] p-6 text-sm text-[var(--color-ink-faint)]">
+      {emptyMessage}
+    </p>
+  ) : (
+    <ul class="flex flex-col divide-y divide-[var(--color-border)]">
+      {posts.map((post) => (
+        <li class="py-5 first:pt-0">
+          <a href={`${base}/${post.id}`} class="group block">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4">
+              <h2 class="text-lg font-medium text-[var(--color-ink)] group-hover:text-[var(--color-accent-ink)]">
+                {post.data.title}
+              </h2>
+              <time
+                datetime={post.data.date.toISOString()}
+                class="text-sm text-[var(--color-ink-faint)]"
+              >
+                {fmt(post.data.date)}
+              </time>
+            </div>
+            <p class="mt-1 text-sm text-[var(--color-ink-soft)]">{post.data.summary}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

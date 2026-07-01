@@ -1,0 +1,129 @@
+---
+import { site, nav } from '@/data/site';
+import Icon from '@/components/Icon.astro';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<header class="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-base)]/85 backdrop-blur">
+  <nav
+    class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4"
+    aria-label="Primary"
+  >
+    <a href="/" class="text-[15px] font-semibold tracking-tight text-[var(--color-ink)]">
+      {site.name}
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="hidden items-center gap-x-6 text-sm md:flex">
+      {
+        nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+              class:list={[
+                'group relative py-1 transition-colors hover:text-[var(--color-ink)]',
+                isActive(item.href)
+                  ? 'text-[var(--color-ink)] font-medium'
+                  : 'text-[var(--color-ink-soft)]',
+              ]}
+            >
+              {item.label}
+              {/* animated underline that grows from the left on hover / active */}
+              <span
+                class:list={[
+                  'absolute -bottom-0.5 left-0 h-px bg-[var(--color-accent)] transition-all duration-300 ease-out',
+                  isActive(item.href) ? 'w-full' : 'w-0 group-hover:w-full',
+                ]}
+              />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Mobile toggle -->
+    <button
+      id="nav-toggle"
+      type="button"
+      class="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-ink)] md:hidden"
+      aria-label="Open menu"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+    >
+      <span data-icon="menu"><Icon name="menu" /></span>
+      <span data-icon="close" class="hidden"><Icon name="close" /></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu: animated slide-down + fade. Collapsed by default. -->
+  <div
+    id="mobile-menu"
+    class="grid grid-rows-[0fr] overflow-hidden transition-[grid-template-rows] duration-300 ease-out md:hidden"
+  >
+    <div class="min-h-0">
+      <ul class="flex flex-col gap-1 border-t border-[var(--color-border)] px-5 py-3 text-[15px]">
+        {
+          nav.map((item, i) => (
+            <li
+              class="mobile-item translate-y-1 opacity-0 transition-all duration-300 ease-out"
+              style={`transition-delay:${i * 40}ms`}
+            >
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                class:list={[
+                  'block rounded-lg px-3 py-2.5 transition-colors',
+                  isActive(item.href)
+                    ? 'bg-[var(--color-accent-soft)] font-medium text-[var(--color-accent-ink)]'
+                    : 'text-[var(--color-ink-soft)] hover:bg-[var(--color-surface)] hover:text-[var(--color-ink)]',
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  if (toggle && menu) {
+    const items = menu.querySelectorAll<HTMLElement>('.mobile-item');
+    const menuIcon = toggle.querySelector<HTMLElement>('[data-icon="menu"]');
+    const closeIcon = toggle.querySelector<HTMLElement>('[data-icon="close"]');
+
+    const setOpen = (open: boolean) => {
+      // Row-template animation drives the height; item classes stagger the reveal.
+      menu.style.gridTemplateRows = open ? '1fr' : '0fr';
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menuIcon?.classList.toggle('hidden', open);
+      closeIcon?.classList.toggle('hidden', !open);
+      items.forEach((el) => {
+        el.classList.toggle('opacity-0', !open);
+        el.classList.toggle('translate-y-1', !open);
+      });
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // Close on Escape for keyboard users.
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>
