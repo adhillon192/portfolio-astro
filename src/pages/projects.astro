@@ -3,8 +3,8 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { hackathons, wcc } from '@/data/site';
 
 // Full case studies for the owned/client builds. WCC is handled separately below
-// as a compact KPI card — per direction, keep its section light and focused on
-// the numbers plus the current website + automation work, not a long narrative.
+// as a compact KPI card — kept deliberately modest (placeholder KPIs, website
+// work framed as a side thing, no invented narrative), not a long case study.
 const caseStudies = [
   {
     name: 'Finlador',
@@ -35,18 +35,9 @@ const caseStudies = [
   },
 ] as const;
 
-// PROVISIONAL — category-level, not specific framework/hosting names, until
-// the exact stack for the website + audit work is confirmed (knowledge-base.md).
-const wccFocus = [
-  'Website rebuild',
-  'Technical audits',
-  'Workflow automation',
-  'KPI dashboards',
-  'Systems integration',
-];
 ---
 
-<BaseLayout title="Projects" description="Case studies — Finlador, Velarisse Leather, and automation + web work at Western Community College.">
+<BaseLayout title="Projects" description="Case studies — Finlador, Velarisse Leather, and automation work at Western Community College.">
   <header class="mb-10">
     <h1 class="text-3xl font-semibold tracking-tight">Projects</h1>
     <p class="mt-3 text-[var(--color-ink-soft)]">
@@ -54,17 +45,17 @@ const wccFocus = [
     </p>
   </header>
 
-  <!-- Western Community College — compact, KPI-led. Focus on the numbers plus the
-       current website + automation work rather than a long narrative. -->
+  <!-- Western Community College — compact, KPI-led, kept deliberately modest.
+       Website work is a small side thing here, not a headline deliverable, and
+       the KPIs below are placeholders pending real figures — less is fine. -->
   <section class="card mb-6 p-6 sm:p-8">
     <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
       <h2 class="text-2xl font-semibold tracking-tight">Western Community College</h2>
       <span class="text-sm text-[var(--color-ink-faint)]">2026 — present</span>
     </div>
     <p class="mt-2 text-sm text-[var(--color-ink-soft)]">
-      Technical Project Coordinator — went in to automate manual tracking, ended up
-      auditing the college's internal tech stack top to bottom and taking on a full
-      public website rebuild, at a 300+ staff, ~$50M/yr institution.
+      Technical Project Coordinator — workflow automation and technical audits across
+      departments, plus some website work on the side, at a 300+ staff, ~$50M/yr institution.
     </p>
 
     <dl class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -80,14 +71,8 @@ const wccFocus = [
       }
     </dl>
 
-    <p class="mt-5 text-sm text-[var(--color-ink-soft)]">
-      Currently shipping a modern public website and expanding automation across teams —
-      the same technical audit that started with spreadsheets now spans the frontend,
-      backend, and hosting choices behind the college's public face.
-    </p>
-
     <ul class="mt-4 flex flex-wrap gap-1.5 text-xs text-[var(--color-ink-faint)]">
-      {wccFocus.map((f) => <li class="rounded bg-[var(--color-base)] px-2 py-0.5">{f}</li>)}
+      {wcc.tags.map((tag) => <li class="rounded bg-[var(--color-base)] px-2 py-0.5">{tag}</li>)}
     </ul>
   </section>
 

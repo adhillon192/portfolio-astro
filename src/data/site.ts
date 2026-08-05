@@ -8,15 +8,19 @@
 
 export const site = {
   name: 'Amardeep Dhillon',
-  // PROVISIONAL — hero positioning is blocked on locking the "primary lane"
-  // (reference doc Flaw #1). "Rising technical consultant" is the working answer.
-  tagline: 'Technical consultant bridging hands-on software and business automation.',
+  // Updated 2026-06-30 per Amardeep's direction to make the security/governance
+  // angle explicit — previously said only "bridging hands-on software and
+  // business automation," which didn't match how he actually pitches himself
+  // (see knowledge-base.md §1, hero-tagline review finding). Copy can still
+  // evolve, but this is a real decision now, not a placeholder.
+  tagline:
+    'Technical consultant for business automation — built with a security- and governance-minded approach.',
   role: 'Technical Project Coordinator',
   location: 'Vancouver, Canada',
   email: 'contact@adhillon.net',
   url: 'https://adhillon.net',
   linkedin: 'https://www.linkedin.com/in/amardeep-dhillon',
-  github: 'https://github.com/adhillon',
+  github: 'https://github.com/adhillon192',
   resume: '/resume.pdf',
   // Standalone shareable link page. Decided as links.adhillon.net (Spec §3);
   // built here as an on-site /links route until the subdomain DNS is configured.
@@ -53,20 +57,16 @@ export const contactLinks: {
 }[] = [
   { label: 'Email', href: 'mailto:contact@adhillon.net', hint: 'contact@adhillon.net', icon: 'mail' },
   { label: 'LinkedIn', href: site.linkedin, hint: 'in/amardeep-dhillon', icon: 'linkedin' },
-  { label: 'GitHub', href: site.github, hint: 'github.com/adhillon', icon: 'github' },
+  { label: 'GitHub', href: site.github, hint: 'github.com/adhillon192', icon: 'github' },
   { label: 'Resume', href: '/resume.pdf', hint: 'PDF download', icon: 'file' },
 ];
 
 /**
  * Western Community College — homepage tile content.
- * KPIs are PROVISIONAL: derived from the known facts (5 departments, ~$50M,
- * 300+ staff, hundreds of manual hours) but the exact figures aren't locked yet
- * (Spec §9 — tighten the hours number if possible). Tags are the technical
- * framing of the work — scope now spans automation, a public website rebuild,
- * and technical audits of the college's existing stack, not just the original
- * department-tracker work. Tag names are category-level (PROVISIONAL) until
- * the specific frameworks/hosting used for the website work are confirmed —
- * see knowledge-base.md.
+ * KPIs are PLACEHOLDER numbers, not final — Amardeep will provide real figures
+ * later; keep them modest and don't dress them up in the meantime (Spec §9).
+ * Website work is a small side thing alongside the core automation/audit
+ * role, not a flagship "rebuild" — keep it framed that way, tag list stays short.
  */
 export const wcc = {
   kpis: [
@@ -75,13 +75,7 @@ export const wcc = {
     { value: '$50M', label: 'annual revenue tracked live' },
     { value: '300+', label: 'staff supported' },
   ],
-  tags: [
-    'Full-stack web development',
-    'Workflow automation',
-    'Technical audits',
-    'KPI dashboards',
-    'Data pipelines',
-  ],
+  tags: ['Workflow automation', 'Technical audits', 'KPI dashboards', 'Website support'],
 } as const;
 
 /** Featured projects surfaced on the homepage bento + /projects case studies. */

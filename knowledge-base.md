@@ -36,9 +36,13 @@ menu (hamburger ↔ ✕).
   (see Decisions Log). Applies to any future case-study copy too: lead with
   numbers and tags, keep prose short.
 - WCC scope has grown beyond the original "five-department automation" story:
-  it now includes a **technical audit of the college's existing internal tech
-  stack** and a **public website rebuild**. Site copy reflects this (KPI tile
-  + `wcc.tags` in `src/data/site.ts`, and the compact card on `/projects`).
+  it now also includes **technical audits of the college's existing internal
+  tech stack**, plus **some website work — explicitly a small side thing, not
+  a flagship "rebuild."** First-pass copy overstated this (said "leading... a
+  public website rebuild" and invented a "went in to X, ended up Y" narrative
+  arc that didn't happen) — Amardeep corrected it; current copy is
+  deliberately modest (see Decisions Log, 2026-06-30 correction entry). Don't
+  re-inflate this without him saying so.
 - Blog + Journal are unified under one `/writing` hub with a toggle
   (**Technical** / **Journals**), not two separate nav tabs — avoids the
   "why are there two blogs" confusion a visitor would otherwise hit. The
@@ -47,23 +51,34 @@ menu (hamburger ↔ ✕).
 - Contact page includes a link out to **Linktree** (or the on-site `/links`
   hub — currently pointed at `/links` until an actual linktr.ee URL exists).
 
-### Open items — need Amardeep's input
-- **GitHub username is unresolved.** The site currently links to
-  `github.com/adhillon`, which is a placeholder guessed early in the build —
-  verified via the GitHub API that this account belongs to someone else (not
-  Amardeep). **Do not treat this as correct.** Candidates tried
-  (`amardeepdhillon`, `amardeep-dhillon`) exist but show 0 public repos, so
-  activity visibility is also an open question. Needed: (1) real username,
-  (2) confirmation that contribution activity is public (or willingness to
-  enable "show private contributions" on the GitHub profile).
-- **Hero embed decision made, blocked on the above.** Amardeep chose a GitHub
-  contribution-activity embed under the hero tagline. Not yet built — needs
-  the real username + public-activity confirmation first.
-- **WCC technology specifics.** The current tags (`Full-stack web
-  development`, `Technical audits`, `Systems integration`, etc.) are
-  intentionally category-level, not specific framework/hosting names, per
+### Resolved: GitHub username + embed (no longer open)
+- **Real username confirmed: `adhillon192`** (9 public repos, real account —
+  verified via API). The earlier placeholder `github.com/adhillon` belonged to
+  a stranger and has been corrected everywhere it appeared (`src/data/site.ts`,
+  `src/pages/contact.astro`).
+- **No GitHub activity embed/graph/stat will be built — decided against, not
+  just deferred.** Amardeep originally asked for one under the hero tagline;
+  after discussion he concluded it doesn't fit his positioning as a technical
+  consultant / cybersecurity-governance profile: that audience hires for
+  judgment, discretion, and named org-scale delivery (WCC, Finlador,
+  Velarisse), not public commit cadence — most of his real work is
+  client/private by nature anyway, so a public contribution graph would
+  measure the wrong thing and sit oddly next to a trust-first positioning.
+  Separately, it also would have added real visual weight (a dense grid
+  clashing with the site's "one clean fact per tile" language) and
+  performance drag (live client-side API calls are rate-limited; a
+  build-time version would need a stored token for a secondary signal).
+  **Don't re-propose this** unless Amardeep raises it again himself.
+- **WCC technology specifics.** The current tags (`Workflow automation`,
+  `Technical audits`, `KPI dashboards`, `Website support`) are intentionally
+  category-level and modest, not specific framework/hosting names, per
   Amardeep's own flag ("I will let you know if things need to change there").
-  Swap in real stack names once confirmed.
+  Swap in real stack names once confirmed — don't add scope/weight beyond
+  what he's confirmed in the meantime.
+- **WCC KPIs are placeholders.** The four figures (100s hrs/yr, 5 departments,
+  $50M, 300+ staff) are rough/illustrative. Amardeep has said real KPIs will
+  be provided later — it's fine for this section to stay sparse until then,
+  don't pad it out with more claims to compensate.
 - **"Currently reading"** — category confirmed (philosophy, see §2), specific
   title still TBD. Now tile shows "Philosophy (title TBD)" as an honest
   placeholder rather than a generic "A book."
@@ -72,6 +87,33 @@ menu (hamburger ↔ ✕).
   bookings/transactions question, Community Support Worker inclusion, real
   resume PDF, `/ideas` page naming, `/journal` gated-vs-open decision, actual
   blog/journal post content).
+
+### Full-site review findings (2026-06-30)
+- **Hero tagline — RESOLVED.** Now: "Technical consultant for business
+  automation — built with a security- and governance-minded approach." A new
+  quiet, small (`text-xs`, ink-faint) credibility line sits just below it in
+  the hero tile: "CompTIA Security+ · Confidential systems in education ·
+  Previously City of Calgary" — plain text, not another row of badge pills,
+  specifically so it doesn't read as credential-stacking (reference doc
+  Flaw #4) directly under the name. The OG social-share image
+  (`public/og-default.svg`) was updated to match. Verified at 1280px, 782px,
+  and 375px widths: no overflow, hero/WCC tile heights still match, button
+  row stays inside the card with room to spare.
+- **The "On repeat" homepage tile is showing literal placeholder instruction
+  text** ("A track goes here — a small Spotify embed or a static 'on repeat'
+  line"), not a provisional-but-real value like the other tiles have. If the
+  site went live today this is the one tile that would visibly look broken/
+  unfinished rather than just "not yet final." Fill it or drop the tile before
+  any real launch.
+- **Launch-readiness flag:** `/ideas` (zero entries either section) and
+  `/writing` (one "hello world" placeholder per tab) mean 2 of 5 top-level nav
+  destinations are currently empty. Fine mid-build; worth a deliberate call
+  before going live (hide from nav vs. wait for at least one real entry each).
+- **WCC write-up is thinner than Finlador/Velarisse's.** Correct for now
+  (KPIs are still placeholders, and "keep it simple" was explicit direction),
+  but once real KPI figures land, WCC — the largest-scale, current-role proof
+  point — probably deserves one more beat of substance on `/projects` so it
+  doesn't read as an afterthought next to a side project.
 
 ---
 
@@ -105,6 +147,32 @@ not for direct verbatim use as site copy unless he says so.
 
 ## 3. Decisions log (dated, most recent first)
 
+- **2026-06-30 (hero tagline fixed)** — After the full-site review flagged the
+  tagline as out of step with Amardeep's actual pitch, he asked to fold in
+  CompTIA Security+, "confidential systems in education" (current WCC role),
+  and prior City of Calgary (public sector) experience — but wasn't sure how
+  to do it without cluttering the hero. Solution: kept the tagline itself as
+  one clean sentence with the security/governance angle now explicit, and
+  added those three specific facts as a separate small muted text line below
+  it (not more badges) so the hero doesn't turn into a credential wall.
+- **2026-06-30 (GitHub embed dropped)** — Confirmed real username
+  (`adhillon192`) and fixed it everywhere the wrong placeholder appeared.
+  Then, talking through the hero-embed idea, Amardeep reconsidered against
+  his actual positioning (technical consultant / cybersecurity-governance)
+  and decided a GitHub activity embed doesn't fit that audience — decided
+  against outright, not just deferred for later. See §1 "Resolved: GitHub
+  username + embed."
+- **2026-06-30 (correction)** — Pulled back the WCC copy after Amardeep flagged
+  it as overclaiming/"cocky": removed "public website rebuild" language
+  (website work is a **side thing**, not a flagship deliverable), removed an
+  invented narrative arc ("went in to automate manual tracking, ended up
+  auditing... and taking on a full rebuild" — not how it happened), dropped
+  the "Full-stack web development" tag, and cut the second WCC paragraph
+  entirely rather than replace it (his words: "it is okay to have less
+  information... keep it simple"). WCC KPIs are explicitly placeholders —
+  real ones to be provided later, don't dress them up meanwhile. Also
+  simplified `/projects` by having it reuse `wcc.tags` directly instead of
+  maintaining a near-duplicate local tag list.
 - **2026-06-30** — Batch update: Vancouver location, CompTIA Security+ spelled
   out, Finlador → "Founding Engineer · equity stake" + Postgres over Supabase,
   Writing toggle relabeled "Technical / Journals", Linktree link added to
