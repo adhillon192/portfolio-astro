@@ -2,9 +2,8 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import BentoCard from '@/components/BentoCard.astro';
 import Icon from '@/components/Icon.astro';
-import { site, projects, credentials, contactLinks, wcc } from '@/data/site';
+import { site, projects, credentials, contactLinks, wcc, fairhand } from '@/data/site';
 
-const finlador = projects.find((p) => p.slug === 'finlador')!;
 const velarisse = projects.find((p) => p.slug === 'velarisse')!;
 
 // Quiet supporting-facts line under the hero tagline — plain text, not another
@@ -70,7 +69,7 @@ const heroCredibility = [
       <div>
         <h2 class="text-2xl font-semibold tracking-tight">Western Community College</h2>
         <p class="mt-2 text-sm text-[var(--color-ink-soft)]">
-          Technical Project Coordinator at a 300+ staff, ~$50M/yr institution —
+          Technical Consultant — Risk & Compliance at a 300+ staff, ~$50M/yr institution —
           workflow automation and systems audits, plus some website work on the side.
         </p>
 
@@ -101,31 +100,15 @@ const heroCredibility = [
       </ul>
     </BentoCard>
 
-    <!-- 3. Finlador -->
-    <BentoCard span={2} eyebrow="Project" class="justify-between">
+    <!-- 3. Fairhand — the studio, not a "Project": different eyebrow, no stack
+         tags/live link since it's an entity, not a shipped build. Only one
+         Project-labeled tile (Velarisse) stays on the homepage. -->
+    <BentoCard span={2} eyebrow="Studio" class="justify-between">
       <div>
-        <div class="flex items-baseline justify-between gap-3">
-          <h2 class="text-xl font-semibold tracking-tight">{finlador.name}</h2>
-          <a
-            href={finlador.live}
-            rel="noopener noreferrer"
-            class="text-sm text-[var(--color-accent-ink)] link-underline"
-          >
-            finlador.com ↗
-          </a>
-        </div>
-        {
-          finlador.role && (
-            <p class="mt-1 text-xs font-medium text-[var(--color-accent-ink)]">
-              {finlador.role} · equity stake
-            </p>
-          )
-        }
-        <p class="mt-2 text-sm text-[var(--color-ink-soft)]">{finlador.oneLiner}</p>
+        <h2 class="text-xl font-semibold tracking-tight">{fairhand.name}</h2>
+        <p class="mt-1 text-xs font-medium text-[var(--color-accent-ink)]">{fairhand.role}</p>
+        <p class="mt-2 text-sm text-[var(--color-ink-soft)]">{fairhand.oneLiner}</p>
       </div>
-      <ul class="mt-4 flex flex-wrap gap-1.5 text-xs text-[var(--color-ink-faint)]">
-        {finlador.stack.map((s) => <li class="rounded bg-[var(--color-base)] px-2 py-0.5">{s}</li>)}
-      </ul>
     </BentoCard>
 
     <!-- 4. Velarisse -->

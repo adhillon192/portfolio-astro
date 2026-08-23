@@ -23,6 +23,39 @@ lives as a download on `/contact`. Mobile collapses to an animated slide-down
 menu (hamburger ↔ ✕).
 
 ### Decisions locked so far
+- **Title: "Technical Consultant — Risk & Compliance"** (was "Technical Project
+  Coordinator") — corrected per spec-v2.md §0, applied everywhere the role
+  appears (`site.ts`, About hero + experience entry, WCC tiles on `/` and
+  `/projects`). About's intro paragraph now leads with this title rather than
+  the automation angle, since Risk & Compliance is the stronger hook for the
+  cybersecurity/governance positioning and substantiates the hero tagline.
+- **Founder line added to About**: "Also building Fairhand, a small
+  technology studio." — one low-key sentence, no further detail, so the
+  master site's "[Name], Founder..." link-out to this portfolio makes sense
+  without importing the master site's full scope onto this resume-facing page.
+- **CIS degree added to the homepage Credentials tile** (site.ts
+  `credentials`) — it already lived in About → Education, but was missing
+  from the pills row referenced by the master site's Founders page copy.
+- **Hackathons: live links added** to Wild Vision (calgaryhacks2025.adhillon.net)
+  and Secure Student (mruhacks2023.adhillon.net) on `/projects`.
+- **datingcoach.adhillon.net — intentionally NOT added as a hackathon
+  project.** Investigated per spec-v2.md §7 and found to be a live 1-on-1
+  dating-coaching business site, not a hackathon build — doesn't fit the
+  hackathon-strip framing or naming pattern. Amardeep asked for it to be
+  acknowledged somewhere low-key and hard to discover instead: added as one
+  small muted line at the very bottom of `/about`, below the Experience list,
+  not on any nav-visible/prominent section. Don't move this more prominently
+  without him asking.
+- **Priorcheck (was AreTheyCringe) added to `/projects`** as a modest,
+  not-yet-shipped entry — framed as "cross-platform social graph risk
+  analysis," explicitly noted as a demand-testing landing page rather than a
+  shipped product, with one line on ToS/scraping-policy awareness. Kept
+  deliberately light on technical specifics (no invented data-pipeline or
+  classification-approach detail) since the referenced `priorcheck-brief.md`
+  wasn't available in this repo — Amardeep confirmed "keep it minimal for
+  now" rather than supplying the real architecture detail. No live URL set
+  (none confirmed) and no stack tags (unknown) — revisit both if/when he
+  provides them.
 - Location: **Vancouver, Canada** (was Calgary in the original planning docs — superseded).
 - Credentials list spells out **"CompTIA Security+"** in full, not abbreviated.
 - Finlador carries a role tag: **"Founding Engineer · equity stake"** — Amardeep
@@ -147,6 +180,42 @@ not for direct verbatim use as site copy unless he says so.
 
 ## 3. Decisions log (dated, most recent first)
 
+- **2026-08-22 (Fairhand promoted to homepage, Finlador reframed)** —
+  Follow-up to the spec-v2.md batch below, same day. Finlador's equity now
+  sits with **Fairhand** (the studio), not Amardeep personally, so the
+  homepage bento was restructured: the Finlador tile was removed and replaced
+  in the same slot by a new **Fairhand** tile (eyebrow "Studio", not
+  "Project" — Velarisse is now the only Project-labeled tile on the
+  homepage), tagged "Founder", one-liner "A small technology studio — the
+  founding entity behind Finlador." New `fairhand` export added to `site.ts`.
+  Finlador itself isn't gone — it still has its full case study on
+  `/projects` and still appears on `/links` (both read from the unchanged
+  `projects` array in `site.ts`) — just its role tag there and on `/projects`
+  now reads "Founding Engineer · equity held via Fairhand" instead of
+  "· equity stake". About's Founder line updated to say "Founder of Fairhand"
+  explicitly (was "building Fairhand"), matching the master site's Founders
+  page wording. Also added a persistent "Projects" shortcut button in the
+  mobile sticky header (`Nav.astro`), next to the hamburger toggle — reason:
+  most traffic to this site is mobile, and Projects is the primary
+  destination; it previously required opening the hamburger menu to reach
+  (the Hero's "View work" button covers first-screen visitors but disappears
+  once scrolled past). Verified at 375px and default widths, no console/
+  server errors.
+- **2026-08-22 (spec-v2.md batch)** — Implemented the well-specified items
+  from spec-v2.md: title correction to "Technical Consultant — Risk &
+  Compliance" everywhere, CIS degree added to the homepage credentials pills,
+  a one-line Founder acknowledgment on About, hackathon live links, and a
+  modest Priorcheck entry on `/projects`. Two items required a judgment call
+  mid-session rather than following the doc verbatim: (1) datingcoach.adhillon.net
+  turned out to be a live dating-coaching business, not a hackathon project —
+  fetched and confirmed live, then buried as one small line at the bottom of
+  `/about` per Amardeep's explicit ask, rather than added to the Hackathons
+  strip as the doc implied; (2) Priorcheck's technical-architecture detail
+  (referenced via a `priorcheck-brief.md` not present in this repo) was left
+  out rather than invented — Amardeep confirmed "keep it minimal" over
+  supplying the real detail. See [[feedback-no-overclaiming]] and
+  [[feedback-positioning-filter]] — both applied directly in this session's
+  calls, not just cited as background.
 - **2026-06-30 (hero tagline fixed)** — After the full-site review flagged the
   tagline as out of step with Amardeep's actual pitch, he asked to fold in
   CompTIA Security+, "confidential systems in education" (current WCC role),

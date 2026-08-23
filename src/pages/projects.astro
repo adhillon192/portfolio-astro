@@ -8,7 +8,7 @@ import { hackathons, wcc } from '@/data/site';
 const caseStudies = [
   {
     name: 'Finlador',
-    role: 'Founding Engineer · equity stake',
+    role: 'Founding Engineer · equity held via Fairhand',
     year: 'Feb 2025',
     live: 'https://finlador.com',
     problem:
@@ -33,6 +33,19 @@ const caseStudies = [
     state: 'Live storefront for a real client brand.',
     stack: ['Next.js', 'TypeScript', 'Tailwind'],
   },
+  {
+    name: 'Priorcheck',
+    role: null,
+    year: 'In progress',
+    live: null,
+    problem:
+      'Cross-platform social graph risk analysis — checking someone across the platforms where they actually have a presence, instead of manually cross-referencing each one by hand.',
+    built:
+      'Currently a demand-testing landing page, not a shipped product — validating interest before building out the underlying data pipeline and classification approach.',
+    state:
+      'Pre-launch. Built with an eye toward platform ToS and scraping-policy constraints, not just the product idea.',
+    stack: [],
+  },
 ] as const;
 
 ---
@@ -54,8 +67,9 @@ const caseStudies = [
       <span class="text-sm text-[var(--color-ink-faint)]">2026 — present</span>
     </div>
     <p class="mt-2 text-sm text-[var(--color-ink-soft)]">
-      Technical Project Coordinator — workflow automation and technical audits across
-      departments, plus some website work on the side, at a 300+ staff, ~$50M/yr institution.
+      Technical Consultant — Risk & Compliance — workflow automation and technical audits
+      across departments, plus some website work on the side, at a 300+ staff, ~$50M/yr
+      institution.
     </p>
 
     <dl class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -140,6 +154,15 @@ const caseStudies = [
             <span class="font-medium text-[var(--color-ink)]">{h.name}</span>
             <span class="text-[var(--color-ink-faint)]">{h.event} · {h.year}</span>
             <span class="w-full text-[var(--color-ink-soft)] sm:w-auto">{h.oneLiner}</span>
+            {h.live && (
+              <a
+                href={h.live}
+                rel="noopener noreferrer"
+                class="text-[var(--color-accent-ink)] link-underline"
+              >
+                {h.live.replace('https://', '')} ↗
+              </a>
+            )}
           </li>
         ))
       }

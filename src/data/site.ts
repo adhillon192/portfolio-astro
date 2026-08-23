@@ -15,7 +15,7 @@ export const site = {
   // evolve, but this is a real decision now, not a placeholder.
   tagline:
     'Technical consultant for business automation — built with a security- and governance-minded approach.',
-  role: 'Technical Project Coordinator',
+  role: 'Technical Consultant — Risk & Compliance',
   location: 'Vancouver, Canada',
   email: 'contact@adhillon.net',
   url: 'https://adhillon.net',
@@ -40,6 +40,7 @@ export const nav: NavItem[] = [
 ];
 
 export const credentials = [
+  { label: 'B.Sc. Computer Information Systems', status: 'certified' as const },
   { label: 'CompTIA Security+', status: 'certified' as const },
   { label: 'Google Analytics', status: 'certified' as const },
   { label: 'Google Ads', status: 'certified' as const },
@@ -76,6 +77,18 @@ export const wcc = {
     { value: '300+', label: 'staff supported' },
   ],
   tags: ['Workflow automation', 'Technical audits', 'KPI dashboards', 'Website support'],
+} as const;
+
+/**
+ * Fairhand — the studio entity Amardeep founded; currently the founding/
+ * equity-holding entity behind Finlador. Kept deliberately thin (name, title,
+ * one line) rather than importing the master site's full multi-venture scope
+ * onto this resume-facing page.
+ */
+export const fairhand = {
+  name: 'Fairhand',
+  role: 'Founder',
+  oneLiner: 'A small technology studio — the founding entity behind Finlador.',
 } as const;
 
 /** Featured projects surfaced on the homepage bento + /projects case studies. */
@@ -116,11 +129,13 @@ export const hackathons = [
     event: 'CalgaryHacks 2025',
     year: 'Feb 2025',
     oneLiner: 'Full-stack app with an AI/ML image-classification component.',
+    live: 'https://calgaryhacks2025.adhillon.net',
   },
   {
     name: 'Secure Student',
     event: 'MRU Hacks 2023',
     year: 'Oct 2023',
     oneLiner: 'Cross-platform app with role-based secure auth for admins, teachers, and students.',
+    live: 'https://mruhacks2023.adhillon.net',
   },
 ] as const;

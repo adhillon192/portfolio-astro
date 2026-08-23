@@ -8,6 +8,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://adhillon.net',
   output: 'static',
+  server: {
+    port: Number(process.env.PORT) || 4321,
+  },
   // Blog + journal indexes were unified into /writing; keep old paths working.
   redirects: {
     '/blog': '/writing',

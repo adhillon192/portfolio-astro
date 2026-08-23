@@ -45,18 +45,29 @@ const isActive = (href: string) =>
       }
     </ul>
 
-    <!-- Mobile toggle -->
-    <button
-      id="nav-toggle"
-      type="button"
-      class="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-ink)] md:hidden"
-      aria-label="Open menu"
-      aria-controls="mobile-menu"
-      aria-expanded="false"
-    >
-      <span data-icon="menu"><Icon name="menu" /></span>
-      <span data-icon="close" class="hidden"><Icon name="close" /></span>
-    </button>
+    <!-- Mobile: a direct Projects shortcut next to the toggle, so the most-
+         wanted destination doesn't require opening the hamburger menu first
+         (most traffic here is mobile). -->
+    <div class="flex items-center gap-2 md:hidden">
+      <a
+        href="/projects"
+        aria-current={isActive('/projects') ? 'page' : undefined}
+        class="rounded-lg bg-[var(--color-ink)] px-3 py-1.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+      >
+        Projects
+      </a>
+      <button
+        id="nav-toggle"
+        type="button"
+        class="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-ink)]"
+        aria-label="Open menu"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+      >
+        <span data-icon="menu"><Icon name="menu" /></span>
+        <span data-icon="close" class="hidden"><Icon name="close" /></span>
+      </button>
+    </div>
   </nav>
 
   <!-- Mobile menu: animated slide-down + fade. Collapsed by default. -->
