@@ -2,9 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import BentoCard from '@/components/BentoCard.astro';
 import Icon from '@/components/Icon.astro';
-import { site, projects, credentials, contactLinks, wcc, fairhand } from '@/data/site';
-
-const velarisse = projects.find((p) => p.slug === 'velarisse')!;
+import { site, credentials, contactLinks, wcc, fairhand } from '@/data/site';
 
 // Quiet supporting-facts line under the hero tagline — plain text, not another
 // row of pills, so it doesn't read as credential-stacking (reference doc
@@ -22,7 +20,7 @@ const heroCredibility = [
     Bento grid (Spec §5). 4 columns on desktop, single stacked column on mobile.
     Tiles are ordered by priority so the mobile stack keeps the same reading order.
   -->
-  <div class="grid grid-cols-1 gap-4 md:grid-cols-4 md:auto-rows-[minmax(0,auto)]">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-4 md:auto-rows-[minmax(0,auto)] md:grid-flow-row-dense">
     <!-- 1. Hero (largest) -->
     <BentoCard span={2} rows={2} class="justify-between">
       <div>
@@ -100,9 +98,47 @@ const heroCredibility = [
       </ul>
     </BentoCard>
 
-    <!-- 3. Fairhand — the studio, not a "Project": different eyebrow, no stack
-         tags/live link since it's an entity, not a shipped build. Only one
-         Project-labeled tile (Velarisse) stays on the homepage. -->
+    <!-- 3. Credentials — promoted to a wide, icon-badge tile (was a small text-pill
+         row) so certifications carry real visual weight, not an afterthought.
+         Placed right after WCC per Amardeep's direct request to lead with these. -->
+    <BentoCard span={3} eyebrow="Credentials">
+      <ul class="grid grid-cols-1 gap-2 sm:grid-cols-3">
+        {
+          credentials.map((c) => (
+            <li class="flex items-center gap-3 rounded-lg bg-[var(--color-base)] p-3">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center">
+                {c.logo ? (
+                  <img
+                    src={c.logo}
+                    alt={`${c.org ?? c.label} logo`}
+                    class="h-10 w-10 object-contain"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span class="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-[var(--color-accent-ink)]">
+                    <Icon name={c.icon} class="h-5 w-5" />
+                  </span>
+                )}
+              </span>
+              <div class="min-w-0">
+                <p class="text-sm font-medium text-[var(--color-ink)]">{c.label}</p>
+                {(c.org || c.status === 'in progress') && (
+                  <p class="text-xs text-[var(--color-ink-faint)]">
+                    {[c.org, c.status === 'in progress' ? 'In progress' : null]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </BentoCard>
+
+    <!-- 4. Fairhand — the studio, not a "Project": different eyebrow, no stack
+         tags/live link since it's an entity, not a shipped build. Projects
+         (including Velarisse) live on /projects, not the homepage bento. -->
     <BentoCard span={2} eyebrow="Studio" class="justify-between">
       <div>
         <h2 class="text-xl font-semibold tracking-tight">{fairhand.name}</h2>
@@ -111,48 +147,7 @@ const heroCredibility = [
       </div>
     </BentoCard>
 
-    <!-- 4. Velarisse -->
-    <BentoCard span={2} eyebrow="Project" class="justify-between">
-      <div>
-        <div class="flex items-baseline justify-between gap-3">
-          <h2 class="text-xl font-semibold tracking-tight">{velarisse.name}</h2>
-          <a
-            href={velarisse.live}
-            rel="noopener noreferrer"
-            class="text-sm text-[var(--color-accent-ink)] link-underline"
-          >
-            velarisseleather.com ↗
-          </a>
-        </div>
-        <p class="mt-2 text-sm text-[var(--color-ink-soft)]">{velarisse.oneLiner}</p>
-      </div>
-      <ul class="mt-4 flex flex-wrap gap-1.5 text-xs text-[var(--color-ink-faint)]">
-        {velarisse.stack.map((s) => <li class="rounded bg-[var(--color-base)] px-2 py-0.5">{s}</li>)}
-      </ul>
-    </BentoCard>
-
-    <!-- 5. Credentials (small) — compact badge row, not a wall (Spec §5.5) -->
-    <BentoCard eyebrow="Credentials">
-      <ul class="flex flex-wrap gap-1.5 text-xs">
-        {
-          credentials.map((c) => (
-            <li
-              class:list={[
-                'rounded-full border px-2.5 py-1',
-                c.status === 'in progress'
-                  ? 'border-dashed border-[var(--color-border-strong)] text-[var(--color-ink-faint)]'
-                  : 'border-[var(--color-border)] text-[var(--color-ink)]',
-              ]}
-            >
-              {c.label}
-              {c.status === 'in progress' && <span class="ml-1 opacity-70">· in progress</span>}
-            </li>
-          ))
-        }
-      </ul>
-    </BentoCard>
-
-    <!-- 6. Now (small) -->
+    <!-- 5. Now (small) -->
     <BentoCard eyebrow="Now">
       <ul class="flex flex-col gap-3 text-sm text-[var(--color-ink-soft)]">
         <li>
@@ -161,14 +156,10 @@ const heroCredibility = [
                (philosophy) is confirmed, so used here instead of a generic placeholder. -->
           <span class="text-[var(--color-ink)]">Philosophy (title TBD)</span>
         </li>
-        <li>
-          <span class="text-[var(--color-ink-faint)]">Next</span><br />
-          <span class="text-[var(--color-ink)]">Master's in Information Technology</span>
-        </li>
       </ul>
     </BentoCard>
 
-    <!-- 7. Contact / linktree (small) — icon per link -->
+    <!-- 6. Contact / linktree (small) — icon per link -->
     <BentoCard eyebrow="Contact">
       <ul class="flex flex-col gap-2.5 text-sm">
         {
@@ -190,7 +181,7 @@ const heroCredibility = [
       </ul>
     </BentoCard>
 
-    <!-- 8. Personality (small, lowest priority) -->
+    <!-- 7. Personality (small, lowest priority) -->
     <BentoCard eyebrow="On repeat">
       <!-- PROVISIONAL — Spotify "now playing" embed or a static track (Spec §5). -->
       <p class="text-sm text-[var(--color-ink-soft)]">

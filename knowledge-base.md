@@ -15,10 +15,11 @@ locked: background `#F7F5F1`, ink `#111113`, amber accent `#D9A441`, light-mode
 only.
 
 **Routes live:** `/`, `/projects`, `/about`, `/writing` (Technical/Journals
-toggle over the `blog` and `journal` content collections), `/ideas`, `/contact`,
-`/links`. `/blog` and `/journal` redirect to `/writing`.
+toggle over the `blog` and `journal` content collections), `/contact`,
+`/links`. `/blog` and `/journal` redirect to `/writing`. `/ideas` was removed
+2026-08-23 (see Decisions Log) — don't re-add without Amardeep asking.
 
-**Nav:** Projects · About · Writing · Ideas · Contact. No Resume tab — resume
+**Nav:** Projects · About · Writing · Contact. No Resume tab — resume
 lives as a download on `/contact`. Mobile collapses to an animated slide-down
 menu (hamburger ↔ ✕).
 
@@ -138,10 +139,10 @@ menu (hamburger ↔ ✕).
   site went live today this is the one tile that would visibly look broken/
   unfinished rather than just "not yet final." Fill it or drop the tile before
   any real launch.
-- **Launch-readiness flag:** `/ideas` (zero entries either section) and
-  `/writing` (one "hello world" placeholder per tab) mean 2 of 5 top-level nav
-  destinations are currently empty. Fine mid-build; worth a deliberate call
-  before going live (hide from nav vs. wait for at least one real entry each).
+- **Launch-readiness flag:** `/writing` (one "hello world" placeholder per
+  tab) is currently empty. Fine mid-build; worth a deliberate call before
+  going live. (`/ideas` — the other empty destination this flag originally
+  named — was removed outright 2026-08-23, see Decisions Log.)
 - **WCC write-up is thinner than Finlador/Velarisse's.** Correct for now
   (KPIs are still placeholders, and "keep it simple" was explicit direction),
   but once real KPI figures land, WCC — the largest-scale, current-role proof
@@ -180,6 +181,55 @@ not for direct verbatim use as site copy unless he says so.
 
 ## 3. Decisions log (dated, most recent first)
 
+- **2026-08-23 (b) (Credential org attribution added; official logos declined;
+  Master's status corrected)** — Follow-up to the Credentials-tile upgrade
+  below, same day. Amardeep asked for the actual official logos (CompTIA,
+  Mount Royal University, Google Analytics, University of the People) on the
+  homepage credential badges. **Declined the logo-fetching part specifically**
+  — reproducing third-party trademarked/copyrighted brand marks without a
+  confirmed license isn't something to just scrape off the web; if Amardeep
+  supplies the actual files himself (e.g. from each org's official
+  brand-asset page) they can be dropped in `public/logos/` and wired in.
+  Instead, did the achievable part of the ask: `credentials` in `site.ts` now
+  carries an `org` field, and the homepage badge grid + `/about` Certifications
+  list show the issuing institution by name under each credential where one
+  applies ("B.Sc. Computer Information Systems — Mount Royal University").
+  Also corrected: **Master's in Information Technology is now "in progress"
+  at University of the People**, not a future "planned"/"Next" item — moved
+  out of the homepage "Now" tile (which previously listed it under "Next")
+  and into the Credentials badge grid alongside HubSpot, consistent with how
+  in-progress credentials are already shown there. `/about`'s Certifications
+  list updated to match. **Don't add real logo image assets without Amardeep
+  supplying the files himself.**
+- **2026-08-23 (a) (Credentials promoted on homepage; Velarisse tile and /ideas
+  removed)** — Three changes from Amardeep's direct request. (1) **Homepage
+  Credentials tile upgraded** from a small row of text pills to a wide
+  (`span=3`) icon-badge grid — each credential now gets a circular icon badge
+  (shield for Security+, cap for the degree, chart/target for Google
+  Analytics/Ads, lightning bolt for HubSpot) plus its label, and the tile
+  moved up to sit right after the WCC tile instead of near the bottom, so
+  credentials read as a real credibility signal, not an afterthought. Real
+  brand logos (CompTIA's mark, Google's, HubSpot's) were **not** reproduced —
+  generic outline icon metaphors were used instead, both to avoid
+  trademark/copyright issues and to stay visually consistent with the site's
+  existing outline icon set (`Icon.astro`). New icon names (`shield`,
+  `graduation-cap`, `chart`, `target`, `spark`) added there; `credentials` in
+  `site.ts` now carries an `icon` field per entry. (2) **Velarisse tile
+  removed from the homepage bento** — it already has a full case study on
+  `/projects` (problem/built/state/stack), so nothing was lost, just
+  de-duplicated; the homepage bento no longer has any "Project"-labeled tile.
+  Freed the slot the Credentials tile now expands into. Added
+  `md:grid-flow-row-dense` to the bento grid container so the resulting
+  span-3 Credentials + span-2 Fairhand + three span-1 tiles pack cleanly
+  without a trailing gap. (3) **`/ideas` page removed entirely** — deleted
+  `src/pages/ideas.astro`, dropped its `nav` entry in `site.ts` (Nav.astro
+  reads `nav` dynamically, so both desktop and mobile menus updated
+  automatically), and updated `README.md`'s route table. It had zero real
+  entries in either section (flagged as a launch-readiness gap in the
+  2026-06-30 review below) and Amardeep called it clutter rather than
+  something to eventually fill in — don't re-add without him asking. No
+  redirect existed for `/ideas` in `astro.config.mjs`, so no config change
+  needed there.
 - **2026-08-22 (Fairhand promoted to homepage, Finlador reframed)** —
   Follow-up to the spec-v2.md batch below, same day. Finlador's equity now
   sits with **Fairhand** (the studio), not Amardeep personally, so the

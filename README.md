@@ -31,19 +31,18 @@ public/                   favicon.svg, og-default.svg, resume.pdf (placeholder)
 
 | Path | Description |
 |------|-------------|
-| `/` | Homepage — bento grid (8 tiles) |
+| `/` | Homepage — bento grid (7 tiles) |
 | `/projects` | Case studies (Finlador, Velarisse, WCC) + hackathons strip |
 | `/about` | Bio, education, certs, career narrative |
 | `/writing` | Unified writing hub with a Technical / Journals toggle |
 | `/blog/[slug]` | Technical post pages (surfaced under Writing → Technical) |
 | `/journal/[slug]` | Personal post pages (surfaced under Writing → Journals) |
-| `/ideas` | Ideas & Archive (structural, empty until entries exist) |
 | `/contact` | Contact page (email, socials, resume download) |
 | `/links` | Linktree-style shareable page |
 | `/resume.pdf` | Downloadable resume (placeholder) — linked from Contact |
 
 `/blog` and `/journal` redirect to `/writing` (kept for old links). The top nav
-is: Projects · About · Writing · Ideas · Contact. On mobile it collapses to an
+is: Projects · About · Writing · Contact. On mobile it collapses to an
 animated slide-down menu (hamburger → ✕).
 
 ## Analytics

@@ -35,16 +35,52 @@ export const nav: NavItem[] = [
   { href: '/projects', label: 'Projects' },
   { href: '/about', label: 'About' },
   { href: '/writing', label: 'Writing' },
-  { href: '/ideas', label: 'Ideas' },
   { href: '/contact', label: 'Contact' },
 ];
 
 export const credentials = [
-  { label: 'B.Sc. Computer Information Systems', status: 'certified' as const },
-  { label: 'CompTIA Security+', status: 'certified' as const },
-  { label: 'Google Analytics', status: 'certified' as const },
-  { label: 'Google Ads', status: 'certified' as const },
-  { label: 'HubSpot', status: 'in progress' as const },
+  {
+    label: 'CompTIA Security+',
+    org: null,
+    status: 'certified' as const,
+    icon: 'shield' as const,
+    logo: '/comptia-security-plus.svg',
+  },
+  {
+    label: 'B.Sc. Computer Information Systems',
+    org: 'Mount Royal University',
+    status: 'certified' as const,
+    icon: 'graduation-cap' as const,
+    logo: '/mru-logo.jpg',
+  },
+  {
+    label: 'Google Analytics',
+    org: null,
+    status: 'certified' as const,
+    icon: 'chart' as const,
+    logo: null,
+  },
+  {
+    label: 'Google Ads',
+    org: null,
+    status: 'certified' as const,
+    icon: 'target' as const,
+    logo: null,
+  },
+  {
+    label: 'HubSpot',
+    org: null,
+    status: 'in progress' as const,
+    icon: 'spark' as const,
+    logo: null,
+  },
+  {
+    label: "Master's in Information Technology",
+    org: 'University of the People',
+    status: 'in progress' as const,
+    icon: 'graduation-cap' as const,
+    logo: '/uopeople-logo.png',
+  },
 ];
 
 // Mirror of the icon names supported by Icon.astro.
