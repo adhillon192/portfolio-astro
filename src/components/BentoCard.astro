@@ -5,21 +5,43 @@
  * desktop grid; all tiles collapse to one column on mobile via the parent grid.
  */
 interface Props {
-  span?: 1 | 2 | 3;
+  span?: 1 | 2 | 3 | 4;
   rows?: 1 | 2;
+  /**
+   * Visual prominence, carried by surface value (see .card tones in global.css).
+   * `raised` sits forward for primary tiles, `quiet` recedes, and `recessed`
+   * inverts the nesting so the tile's contents read as the raised elements.
+   */
+  tone?: 'raised' | 'default' | 'quiet' | 'recessed';
   /** Optional label shown small + uppercase at the top of the tile. */
   eyebrow?: string;
   as?: 'div' | 'section';
   class?: string;
 }
 
-const { span = 1, rows = 1, eyebrow, as = 'section', class: className = '' } = Astro.props;
+const {
+  span = 1,
+  rows = 1,
+  tone = 'default',
+  eyebrow,
+  as = 'section',
+  class: className = '',
+} = Astro.props;
 const Tag = as;
+
+// Padding tracks prominence too — primary tiles get more room to breathe.
+const toneClass = {
+  raised: 'card p-6 sm:p-7',
+  default: 'card p-6',
+  quiet: 'card card--quiet p-5',
+  recessed: 'card card--recessed p-6',
+}[tone];
 
 const spanClass = {
   1: 'md:col-span-1',
   2: 'md:col-span-2',
   3: 'md:col-span-3',
+  4: 'md:col-span-4',
 }[span];
 
 const rowClass = {
@@ -30,7 +52,8 @@ const rowClass = {
 
 <Tag
   class:list={[
-    'card flex flex-col p-6',
+    'flex flex-col',
+    toneClass,
     spanClass,
     rowClass,
     className,
@@ -38,9 +61,7 @@ const rowClass = {
 >
   {
     eyebrow && (
-      <p class="mb-3 text-xs font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
-        {eyebrow}
-      </p>
+      <p class="eyebrow mb-3">{eyebrow}</p>
     )
   }
   <slot />

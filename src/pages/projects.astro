@@ -59,34 +59,34 @@ const caseStudies = [
   </header>
 
   <!-- Western Community College — compact, KPI-led, kept deliberately modest.
-       Website work is a small side thing here, not a headline deliverable, and
-       the KPIs below are placeholders pending real figures — less is fine. -->
+       Website work is a small side thing here, not a headline deliverable.
+       The KPI grid is sized off wcc.kpis rather than a fixed 4 columns, so it
+       stays correct as figures are added back (see the TODO in site.ts). -->
   <section class="card mb-6 p-6 sm:p-8">
     <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
       <h2 class="text-2xl font-semibold tracking-tight">Western Community College</h2>
-      <span class="text-sm text-[var(--color-ink-faint)]">2026 — present</span>
+      <span class="meta">2026 — present</span>
     </div>
+    <!-- Scale figures live in the KPI tiles below, so this line doesn't repeat
+         them — it carries the role and the scope of work instead. -->
     <p class="mt-2 text-sm text-[var(--color-ink-soft)]">
-      Technical Consultant — Risk & Compliance — workflow automation and technical audits
-      across departments, plus some website work on the side, at a 300+ staff, ~$50M/yr
-      institution.
+      Technical Consultant — Risk &amp; Compliance — workflow automation and technical audits
+      across the college's internal systems, plus some website work on the side.
     </p>
 
-    <dl class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <dl class="mt-6 grid grid-cols-2 gap-3">
       {
         wcc.kpis.map((kpi) => (
           <div class="rounded-lg bg-[var(--color-base)] p-3">
-            <dt class="text-2xl font-semibold tracking-tight text-[var(--color-ink)]">
-              {kpi.value}
-            </dt>
+            <dt class="figure text-2xl">{kpi.value}</dt>
             <dd class="mt-0.5 text-xs leading-snug text-[var(--color-ink-soft)]">{kpi.label}</dd>
           </div>
         ))
       }
     </dl>
 
-    <ul class="mt-4 flex flex-wrap gap-1.5 text-xs text-[var(--color-ink-faint)]">
-      {wcc.tags.map((tag) => <li class="rounded bg-[var(--color-base)] px-2 py-0.5">{tag}</li>)}
+    <ul class="mt-4 flex flex-wrap gap-1.5">
+      {wcc.tags.map((tag) => <li class="tag">{tag}</li>)}
     </ul>
   </section>
 
@@ -96,7 +96,7 @@ const caseStudies = [
         <article class="card p-6 sm:p-8">
           <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
             <h2 class="text-2xl font-semibold tracking-tight">{cs.name}</h2>
-            <span class="text-sm text-[var(--color-ink-faint)]">{cs.year}</span>
+            <span class="meta">{cs.year}</span>
           </div>
           {cs.role && (
             <p class="mt-1 text-sm font-medium text-[var(--color-accent-ink)]">{cs.role}</p>
@@ -113,28 +113,22 @@ const caseStudies = [
 
           <dl class="mt-5 flex flex-col gap-4 text-sm leading-relaxed">
             <div>
-              <dt class="text-xs font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
-                Problem
-              </dt>
+              <dt class="eyebrow">Problem</dt>
               <dd class="mt-1 text-[var(--color-ink-soft)]">{cs.problem}</dd>
             </div>
             <div>
-              <dt class="text-xs font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
-                What was built
-              </dt>
+              <dt class="eyebrow">What was built</dt>
               <dd class="mt-1 text-[var(--color-ink-soft)]">{cs.built}</dd>
             </div>
             <div>
-              <dt class="text-xs font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
-                Current state
-              </dt>
+              <dt class="eyebrow">Current state</dt>
               <dd class="mt-1 text-[var(--color-ink-soft)]">{cs.state}</dd>
             </div>
           </dl>
 
-          <ul class="mt-5 flex flex-wrap gap-1.5 text-xs text-[var(--color-ink-faint)]">
+          <ul class="mt-5 flex flex-wrap gap-1.5">
             {cs.stack.map((s) => (
-              <li class="rounded bg-[var(--color-base)] px-2 py-0.5">{s}</li>
+              <li class="tag">{s}</li>
             ))}
           </ul>
         </article>
@@ -144,15 +138,13 @@ const caseStudies = [
 
   <!-- Hackathons strip — one line each, below the main case studies (Spec §6) -->
   <section class="mt-12">
-    <h2 class="text-sm font-medium uppercase tracking-wider text-[var(--color-ink-faint)]">
-      Hackathons
-    </h2>
+    <h2 class="eyebrow">Hackathons</h2>
     <ul class="mt-4 flex flex-col gap-3">
       {
         hackathons.map((h) => (
           <li class="flex flex-wrap items-baseline gap-x-3 border-b border-[var(--color-border)] pb-3 text-sm">
             <span class="font-medium text-[var(--color-ink)]">{h.name}</span>
-            <span class="text-[var(--color-ink-faint)]">{h.event} · {h.year}</span>
+            <span class="meta">{h.event} · {h.year}</span>
             <span class="w-full text-[var(--color-ink-soft)] sm:w-auto">{h.oneLiner}</span>
             {h.live && (
               <a

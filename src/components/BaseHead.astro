@@ -55,12 +55,16 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
 
-<!-- Fonts: one family (Inter), two weights (Spec §4) -->
+<!--
+  Fonts: IBM Plex Sans for prose, IBM Plex Mono for the "instrument voice"
+  (eyebrows, KPI figures, tags). Mono ships one weight only — it's used at small
+  sizes for labels, so extra weights would be dead payload.
+-->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
   rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+  href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
 />
 
 {

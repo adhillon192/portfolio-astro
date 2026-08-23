@@ -22,7 +22,7 @@ const heroCredibility = [
   -->
   <div class="grid grid-cols-1 gap-4 md:grid-cols-4 md:auto-rows-[minmax(0,auto)] md:grid-flow-row-dense">
     <!-- 1. Hero (largest) -->
-    <BentoCard span={2} rows={2} class="justify-between">
+    <BentoCard span={2} rows={2} tone="raised" class="justify-between">
       <div>
         <div class="flex flex-wrap gap-2">
           <span
@@ -36,7 +36,7 @@ const heroCredibility = [
             Open to consulting
           </span>
         </div>
-        <h1 class="mt-6 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+        <h1 class="mt-6 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
           {site.name}
         </h1>
         <p class="mt-4 max-w-md text-lg text-[var(--color-ink-soft)] text-pretty">
@@ -63,22 +63,24 @@ const heroCredibility = [
     </BentoCard>
 
     <!-- 2. Current work / WCC — strongest tile, real visual weight -->
-    <BentoCard span={2} rows={2} eyebrow="Current work" class="justify-between">
+    <BentoCard span={2} rows={2} tone="raised" eyebrow="Current work" class="justify-between">
       <div>
-        <h2 class="text-2xl font-semibold tracking-tight">Western Community College</h2>
+        <h2 class="text-lg font-semibold tracking-tight sm:text-xl md:whitespace-nowrap">Western Community College</h2>
+        <!-- Scale figures live in the KPI tiles below, so this line no longer
+             repeats them — it carries the role and the scope of work instead. -->
         <p class="mt-2 text-sm text-[var(--color-ink-soft)]">
-          Technical Consultant — Risk & Compliance at a 300+ staff, ~$50M/yr institution —
-          workflow automation and systems audits, plus some website work on the side.
+          Technical Consultant — Risk &amp; Compliance. Workflow automation and technical
+          audits across the college's internal systems, plus some website work on the side.
         </p>
 
-        <!-- KPI callouts (replaces the long paragraph) -->
-        <dl class="mt-5 grid grid-cols-2 gap-3">
+        <!-- KPI callouts (replaces the long paragraph). Kept compact on purpose:
+             this tile sits above the fold and shouldn't out-weigh Credentials
+             below it, which is where the authority signal actually lives. -->
+        <dl class="mt-4 grid grid-cols-2 gap-2">
           {
             wcc.kpis.map((kpi) => (
-              <div class="rounded-lg bg-[var(--color-base)] p-3">
-                <dt class="text-2xl font-semibold tracking-tight text-[var(--color-ink)]">
-                  {kpi.value}
-                </dt>
+              <div class="rounded-lg bg-[var(--color-base)] p-2.5">
+                <dt class="figure text-lg">{kpi.value}</dt>
                 <dd class="mt-0.5 text-xs leading-snug text-[var(--color-ink-soft)]">
                   {kpi.label}
                 </dd>
@@ -89,23 +91,20 @@ const heroCredibility = [
       </div>
 
       <!-- Technical tags (replaces the department pills) -->
-      <ul class="mt-5 flex flex-wrap gap-1.5 text-xs text-[var(--color-ink-faint)]">
-        {
-          wcc.tags.map((tag) => (
-            <li class="rounded bg-[var(--color-base)] px-2 py-0.5">{tag}</li>
-          ))
-        }
+      <ul class="mt-5 flex flex-wrap gap-1.5">
+        {wcc.tags.map((tag) => <li class="tag">{tag}</li>)}
       </ul>
     </BentoCard>
 
-    <!-- 3. Credentials — promoted to a wide, icon-badge tile (was a small text-pill
-         row) so certifications carry real visual weight, not an afterthought.
-         Placed right after WCC per Amardeep's direct request to lead with these. -->
-    <BentoCard span={3} eyebrow="Credentials">
-      <ul class="grid grid-cols-1 gap-2 sm:grid-cols-3">
+    <!-- 3. Credentials — full-width so certifications carry real visual weight,
+         not an afterthought. Placed right after WCC per Amardeep's direct
+         request to lead with these; widened to span 4 when the Now / On repeat
+         tiles were dropped, which also keeps the grid perfectly packed. -->
+    <BentoCard span={4} tone="recessed" eyebrow="Credentials">
+      <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {
           credentials.map((c) => (
-            <li class="flex items-center gap-3 rounded-lg bg-[var(--color-base)] p-3">
+            <li class="flex items-center gap-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3">
               <span class="flex h-10 w-10 shrink-0 items-center justify-center">
                 {c.logo ? (
                   <img
@@ -139,7 +138,7 @@ const heroCredibility = [
     <!-- 4. Fairhand — the studio, not a "Project": different eyebrow, no stack
          tags/live link since it's an entity, not a shipped build. Projects
          (including Velarisse) live on /projects, not the homepage bento. -->
-    <BentoCard span={2} eyebrow="Studio" class="justify-between">
+    <BentoCard span={2} tone="quiet" eyebrow="Studio" class="justify-between">
       <div>
         <h2 class="text-xl font-semibold tracking-tight">{fairhand.name}</h2>
         <p class="mt-1 text-xs font-medium text-[var(--color-accent-ink)]">{fairhand.role}</p>
@@ -147,20 +146,9 @@ const heroCredibility = [
       </div>
     </BentoCard>
 
-    <!-- 5. Now (small) -->
-    <BentoCard eyebrow="Now">
-      <ul class="flex flex-col gap-3 text-sm text-[var(--color-ink-soft)]">
-        <li>
-          <span class="text-[var(--color-ink-faint)]">Reading</span><br />
-          <!-- PROVISIONAL — specific title not yet confirmed (Spec §9); category
-               (philosophy) is confirmed, so used here instead of a generic placeholder. -->
-          <span class="text-[var(--color-ink)]">Philosophy (title TBD)</span>
-        </li>
-      </ul>
-    </BentoCard>
-
-    <!-- 6. Contact / linktree (small) — icon per link -->
-    <BentoCard eyebrow="Contact">
+    <!-- 5. Contact / linktree — icon per link. Widened to span 2 to pair with
+         Fairhand on the closing row. -->
+    <BentoCard span={2} tone="quiet" eyebrow="Contact">
       <ul class="flex flex-col gap-2.5 text-sm">
         {
           contactLinks.map((link) => (
@@ -179,14 +167,6 @@ const heroCredibility = [
           ))
         }
       </ul>
-    </BentoCard>
-
-    <!-- 7. Personality (small, lowest priority) -->
-    <BentoCard eyebrow="On repeat">
-      <!-- PROVISIONAL — Spotify "now playing" embed or a static track (Spec §5). -->
-      <p class="text-sm text-[var(--color-ink-soft)]">
-        A track goes here — a small Spotify embed or a static “on repeat” line.
-      </p>
     </BentoCard>
   </div>
 </BaseLayout>

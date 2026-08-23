@@ -1,28 +1,52 @@
 @import 'tailwindcss';
 
 /*
-  Design system — Palette A: "Ink & warm white" (Spec §4).
-  Neutrals for ~90%+ of the UI, exactly one accent (amber), no gradients,
-  no drop shadows beyond a subtle card border. Light mode only for v1.
+  Design system — Palette B: "Ledger" (supersedes Spec §4 "Ink & warm white",
+  changed 2026-08-23).
+
+  The old palette was warm cream + amber. That combination is one of the most
+  common signatures of generic AI-generated design, which is exactly the
+  "vibe coded" read Amardeep flagged — it was the safe answer rather than a
+  chosen one. This palette commits the other way on both axes:
+
+  - Paper is COOL, not warm — a pale blue-grey that reads archival/records
+    rather than cosy-blog.
+  - The accent is OXBLOOD — the colour of seals, ledgers and legal binding.
+    It carries institutional gravity without the corporate-blue cliché, and
+    it's nowhere near the amber/terracotta or acid-green defaults.
+
+  Still exactly one accent, still neutrals for ~90%+ of the UI, still no
+  gradients. Depth is carried by surface VALUE (see the .card tones below),
+  not by drop shadows. Light mode only for v1.
 */
 @theme {
-  /* Neutrals */
-  --color-base: #f7f5f1; /* warm off-white background */
-  --color-surface: #fffefb; /* card / raised surface */
-  --color-ink: #111113; /* primary text */
-  --color-ink-soft: #4a4a4f; /* secondary text */
-  --color-ink-faint: #8a8a8f; /* tertiary / captions */
-  --color-border: #e4e0d8; /* subtle card border */
-  --color-border-strong: #d6d1c6;
+  /* Neutrals — cool "ledger paper" */
+  --color-base: #eceff3; /* page background — the recessed value */
+  --color-surface: #fbfcfd; /* card / raised surface — the lightest value */
+  --color-surface-quiet: #f5f7f9; /* mid value, for lower-priority tiles */
+  --color-ink: #12161c; /* primary text — cool near-black */
+  --color-ink-soft: #454e5a; /* secondary text */
+  --color-ink-faint: #5d6773; /* tertiary / captions — AA-safe on all surfaces */
+  --color-border: #dce1e7; /* subtle card border */
+  --color-border-strong: #c3cad3;
 
-  /* Single accent */
-  --color-accent: #d9a441;
-  --color-accent-ink: #8a6414; /* accent text on light bg (AA-safe) */
-  --color-accent-soft: #f6ecd6; /* accent-tinted fill */
+  /* Single accent — oxblood */
+  --color-accent: #7a2230;
+  --color-accent-ink: #6b1e2b; /* accent text on light bg (AA-safe) */
+  --color-accent-soft: #f1e5e7; /* accent-tinted fill */
 
-  /* Type — one family, two weights in practice */
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
-    Roboto, Helvetica, Arial, sans-serif;
+  /*
+    Type — two families, each with one job (was: Inter alone).
+    IBM Plex Sans carries all prose. IBM Plex Mono is reserved for *instrument
+    voice* only: section eyebrows, KPI figures, and technical tags — the parts
+    of the page that are readings and labels rather than sentences. Plex was
+    drawn for an enterprise-technology context and reads institutional rather
+    than startup-default, which is the register this site is pitching into.
+  */
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, 'SF Mono',
+    Menlo, Consolas, monospace;
 
   /* Radius — consistent 12–16px on cards */
   --radius-card: 14px;
@@ -49,10 +73,86 @@ body {
 
 /* Shared building blocks */
 @layer components {
+  /*
+    Tile tones. Previously every tile was one identical surface, so the page
+    read as a single flat texture and hierarchy lived only in font size.
+    Now prominence is encoded in the surface VALUE — lighter sits forward,
+    darker recedes — which gives depth without reaching for drop shadows
+    (shadows on every card being another generic-template tell).
+
+      .card            default   — mid-priority tiles
+      .card--raised    lightest  — primary tiles (Hero, current work)
+      .card--quiet     mid       — low-priority tiles, recede slightly
+      .card--recessed  darkest   — inverts the nesting: the tile sits back and
+                                   its CONTENTS come forward as light chips.
+                                   Used for the Credentials band so it reads as
+                                   a distinct section rather than one more card.
+  */
   .card {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-card);
+  }
+
+  .card--quiet {
+    background-color: var(--color-surface-quiet);
+  }
+
+  .card--recessed {
+    background-color: var(--color-base);
+    border-color: var(--color-border-strong);
+  }
+
+  /*
+    "Instrument voice" — the shared mono treatment for content that is READ AS
+    DATA rather than as language. Extracted here (rather than repeating the
+    utility stack) so the rule stays consistent as pages are added.
+
+    In scope: section labels, figures, dates, tags.
+    Out of scope: links and prose. URLs are navigation targets, not readings,
+    and they already carry the accent colour + underline — putting them in mono
+    too would add a third texture to cards that are busy enough.
+  */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-ink-faint);
+  }
+
+  /* Figures: mono + tabular so digits align across a row of KPI tiles. */
+  .figure {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+
+  /* Dates / years / small metadata readings. */
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-ink-faint);
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    border-radius: 4px;
+    background-color: var(--color-base);
+    padding: 0.125rem 0.5rem;
+    color: var(--color-ink-faint);
+  }
+
+  /* Post topic tags. Same voice, accent fill — the colour is what separates a
+     subject tag from the neutral tech-stack tags on /projects. */
+  .tag--accent {
+    border-radius: 9999px;
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent-ink);
   }
 
   .link-underline {

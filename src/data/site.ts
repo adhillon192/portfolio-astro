@@ -100,16 +100,25 @@ export const contactLinks: {
 
 /**
  * Western Community College — homepage tile content.
- * KPIs are PLACEHOLDER numbers, not final — Amardeep will provide real figures
- * later; keep them modest and don't dress them up in the meantime (Spec §9).
+ *
+ * These two figures describe the SCALE Amardeep operates at, not outcomes he
+ * produced — they're institutional facts about the college, defensible on the
+ * spot in an interview. That framing is deliberate (2026-08-23): the tile
+ * previously also carried "100s hrs/yr of manual reporting eliminated" and
+ * "5 departments unified", which are impact claims that were still marked
+ * placeholder. Rather than pitch with numbers he couldn't source, those two
+ * were pulled until he confirms real figures.
+ *
+ * TODO(Amardeep): supply real impact numbers and add them back here — this is
+ * the strongest proof point on the site and it's currently under-selling.
+ *
+ * Don't pad this list out with softer claims to fill the space (Spec §9).
  * Website work is a small side thing alongside the core automation/audit
  * role, not a flagship "rebuild" — keep it framed that way, tag list stays short.
  */
 export const wcc = {
   kpis: [
-    { value: '100s', label: 'hrs/yr of manual reporting eliminated' },
-    { value: '5', label: 'departments unified' },
-    { value: '$50M', label: 'annual revenue tracked live' },
+    { value: '$50M', label: 'annual revenue, institution-wide' },
     { value: '300+', label: 'staff supported' },
   ],
   tags: ['Workflow automation', 'Technical audits', 'KPI dashboards', 'Website support'],

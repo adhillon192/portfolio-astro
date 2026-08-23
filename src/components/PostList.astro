@@ -28,10 +28,7 @@ const fmt = (d: Date) =>
               <h2 class="text-lg font-medium text-[var(--color-ink)] group-hover:text-[var(--color-accent-ink)]">
                 {post.data.title}
               </h2>
-              <time
-                datetime={post.data.date.toISOString()}
-                class="text-sm text-[var(--color-ink-faint)]"
-              >
+              <time datetime={post.data.date.toISOString()} class="meta">
                 {fmt(post.data.date)}
               </time>
             </div>

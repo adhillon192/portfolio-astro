@@ -45,17 +45,10 @@ const isActive = (href: string) =>
       }
     </ul>
 
-    <!-- Mobile: a direct Projects shortcut next to the toggle, so the most-
-         wanted destination doesn't require opening the hamburger menu first
-         (most traffic here is mobile). -->
+    <!-- Mobile: just the hamburger toggle. Projects is reached via the
+         dropdown (nav.map below) like every other section, not a standalone
+         button next to the toggle. -->
     <div class="flex items-center gap-2 md:hidden">
-      <a
-        href="/projects"
-        aria-current={isActive('/projects') ? 'page' : undefined}
-        class="rounded-lg bg-[var(--color-ink)] px-3 py-1.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
-      >
-        Projects
-      </a>
       <button
         id="nav-toggle"
         type="button"

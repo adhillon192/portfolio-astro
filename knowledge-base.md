@@ -10,9 +10,15 @@ Read this first in any new session working on the site.
 ## 1. Site build status (current)
 
 **Stack:** Astro (static output) + Tailwind CSS v4 + TypeScript. Hosting: Railway
-(planned, not yet deployed from this repo). Palette A ("Ink & warm white") is
-locked: background `#F7F5F1`, ink `#111113`, amber accent `#D9A441`, light-mode
-only.
+(planned, not yet deployed from this repo).
+
+**Palette B ("Ledger")** — current as of 2026-08-23, supersedes Palette A
+("Ink & warm white"). Cool blue-grey paper: base `#ECEFF3`, surface `#FBFCFD`,
+quiet surface `#F5F7F9`, ink `#12161C`, **oxblood** accent `#7A2230`.
+Light-mode only. **Type:** IBM Plex Sans for prose, IBM Plex Mono reserved for
+"instrument voice" (eyebrows, KPI figures, tags) — replaced Inter. Both changes
+were made to move the site off a recognisably generic-AI look; see Decisions
+Log entries (d) and (e) for the full reasoning and the revert path.
 
 **Routes live:** `/`, `/projects`, `/about`, `/writing` (Technical/Journals
 toggle over the `blog` and `journal` content collections), `/contact`,
@@ -109,13 +115,15 @@ menu (hamburger ↔ ✕).
   Amardeep's own flag ("I will let you know if things need to change there").
   Swap in real stack names once confirmed — don't add scope/weight beyond
   what he's confirmed in the meantime.
-- **WCC KPIs are placeholders.** The four figures (100s hrs/yr, 5 departments,
-  $50M, 300+ staff) are rough/illustrative. Amardeep has said real KPIs will
-  be provided later — it's fine for this section to stay sparse until then,
-  don't pad it out with more claims to compensate.
-- **"Currently reading"** — category confirmed (philosophy, see §2), specific
-  title still TBD. Now tile shows "Philosophy (title TBD)" as an honest
-  placeholder rather than a generic "A book."
+- **WCC KPIs — partially resolved 2026-08-23 by removal.** The two impact
+  claims (100s hrs/yr, 5 departments) were pulled rather than shipped as
+  placeholders; only the two institutional scale facts ($50M, 300+ staff)
+  remain, relabelled as scale. **Still blocked on Amardeep for real impact
+  figures** — see Decisions Log entry (e). Don't pad this out with softer
+  claims to compensate in the meantime.
+- **"Currently reading"** — was shown as "Philosophy (title TBD)". The Now tile
+  was removed entirely 2026-08-23 (entry (d)), so this is no longer surfaced
+  anywhere; the open question only matters again if a Now tile comes back.
 - Everything listed as still-open in `site-build-spec-v1.md` §9 remains open
   unless noted as resolved above (hero positioning line, Finlador
   bookings/transactions question, Community Support Worker inclusion, real
@@ -133,12 +141,10 @@ menu (hamburger ↔ ✕).
   (`public/og-default.svg`) was updated to match. Verified at 1280px, 782px,
   and 375px widths: no overflow, hero/WCC tile heights still match, button
   row stays inside the card with room to spare.
-- **The "On repeat" homepage tile is showing literal placeholder instruction
-  text** ("A track goes here — a small Spotify embed or a static 'on repeat'
-  line"), not a provisional-but-real value like the other tiles have. If the
-  site went live today this is the one tile that would visibly look broken/
-  unfinished rather than just "not yet final." Fill it or drop the tile before
-  any real launch.
+- **The "On repeat" homepage tile — RESOLVED 2026-08-23 (dropped).** It was
+  showing literal placeholder instruction text and would have looked broken at
+  launch; rather than fill it, the tile was removed along with the "Now" tile
+  (see Decisions Log entry (d)). The homepage now carries no placeholder copy.
 - **Launch-readiness flag:** `/writing` (one "hello world" placeholder per
   tab) is currently empty. Fine mid-build; worth a deliberate call before
   going live. (`/ideas` — the other empty destination this flag originally
@@ -181,6 +187,106 @@ not for direct verbatim use as site copy unless he says so.
 
 ## 3. Decisions log (dated, most recent first)
 
+- **2026-08-23 (d) (Homepage hierarchy rebalance + typeface change)** — Amardeep
+  said the homepage type felt oversized, that the WCC KPI tile was crowding the
+  Credentials tile out of view ("so someone actually scrolls down and sees the
+  certifications, which gives things more authority"), and that the site as a
+  whole "feels vibe coded." Changes made:
+  - **Sizes down:** `h1` (name) `text-4xl sm:text-5xl` → `text-3xl sm:text-4xl`;
+    WCC KPI figures `text-2xl` → `text-lg` with tighter padding/gaps; WCC `h2`
+    `text-2xl` → `text-lg sm:text-xl` plus `md:whitespace-nowrap` so
+    "Western Community College" holds one line (verified 320/375/768/1280px).
+  - **Nav:** the standalone mobile "Projects" button next to the hamburger was
+    removed — Projects is now reached through the dropdown like every other
+    section. The homepage hero "View work" button was explicitly kept.
+  - **Two placeholder tiles dropped:** "Now" (Reading — "Philosophy (title
+    TBD)") and "On repeat" (which still held literal instruction text and was
+    already flagged above as the one tile that would look broken at launch).
+    Removing them cut the last two visible placeholders from the homepage and
+    tightened the page to Hero → WCC → Credentials → Fairhand/Contact.
+  - **Grid rebalanced** so nothing left a hole: Credentials widened to span 4
+    (full width — the authority signal now gets the most real estate and sits
+    in view without scrolling at 1280×800), Contact widened to span 2 to pair
+    with Fairhand on the closing row. `BentoCard` gained a `span={4}` option.
+  - **Typeface: Inter → IBM Plex Sans + IBM Plex Mono.** Inter is the single
+    biggest "AI-generated template" tell, and the site's warm-cream-plus-amber
+    palette already sits close to a known generic-AI look. Plex was drawn for
+    an enterprise-technology context, reads institutional rather than
+    startup-default, and its Mono is now reserved for *instrument voice* only —
+    section eyebrows, KPI figures, and technical tags (the parts that are
+    readings and labels, not sentences). This supersedes the Spec §4 "one
+    family (Inter), two weights" decision. Revert = restore the Inter link in
+    `BaseHead.astro` + `--font-sans` in `global.css`.
+- **2026-08-23 (e) (Palette B "Ledger"; container hierarchy; placeholder KPIs
+  pulled)** — Same session as (d), after Amardeep chose "repalette + container
+  hierarchy" and "keep only what's true" on the KPIs.
+  - **Palette A ("Ink & warm white", Spec §4) is superseded by Palette B
+    ("Ledger").** Warm cream + amber is one of the most recognisable signatures
+    of generic AI-generated design — it was the safe answer, not a chosen one,
+    and it was a big part of the "vibe coded" read. Palette B commits the other
+    way on both axes: cool pale blue-grey paper (`#eceff3` base / `#fbfcfd`
+    surface) and an **oxblood** accent (`#7a2230`) — the colour of seals,
+    ledgers and legal binding, chosen for institutional gravity without the
+    corporate-blue cliché and deliberately away from the amber/terracotta and
+    acid-green defaults. Still exactly one accent, still no gradients.
+  - **Accessibility improved as a side effect.** Every text/surface pair now
+    passes WCAG AA (weakest 4.68:1). The old `--color-ink-faint` (`#8a8a8f`)
+    measured **3.41:1** on card surface — it was failing AA for the caption
+    text it was used on. New value `#5d6773` measures 4.98–5.60:1.
+  - **Container hierarchy — depth by surface VALUE, not shadows.** Every tile
+    used to be the identical surface, so the page read as one flat texture and
+    hierarchy lived only in font size. `BentoCard` gained a `tone` prop:
+    `raised` (lightest, more padding — Hero + WCC), `default`, `quiet`
+    (mid value, less padding — Fairhand + Contact), and `recessed` (darkest —
+    Credentials). Shadows were deliberately NOT used; "a soft shadow on every
+    card" is itself a template tell, and value-based depth is more disciplined.
+  - **Credentials uses inverted nesting** as the page's one signature device:
+    the tile sits back on `--color-base` and its contents come forward as light
+    `--color-surface` chips — the reverse of every other tile (surface tile,
+    base-coloured inner chips). This makes the credentials read as a distinct
+    band rather than one more card, which is exactly the authority emphasis
+    Amardeep asked for. A dark/ink treatment was considered for this tile and
+    rejected: `mru-logo.jpg` is an opaque JPEG and would have shown a white box.
+    (Bonus: on the old cream chips that white JPEG box was faintly visible —
+    on the new near-white chips the delta is 4/255, i.e. invisible.)
+  - **Two WCC KPIs pulled.** "100s hrs/yr of manual reporting eliminated" and
+    "5 departments unified" were impact claims still marked placeholder, and
+    Amardeep is pitching with this page — presenting numbers he couldn't source
+    on the spot was the risk. Remaining two (`$50M`, `300+`) are institutional
+    scale facts, relabelled to read as scale rather than outcomes. The WCC
+    paragraph was rewritten so it no longer repeats those same two figures.
+    **This tile is now under-selling him — restore real impact numbers as soon
+    as he supplies them** (`wcc.kpis` in `site.ts`, TODO left in place).
+  - Revert path if any of this is unwanted: palette lives entirely in the
+    `@theme` block of `global.css` (all components read the tokens, so one
+    block controls it); tones are the `.card--*` rules plus `toneClass` in
+    `BentoCard.astro`.
+- **Open / not yet done — mono "instrument voice" is homepage-only.** `/projects`
+  has the same class of content (stack tags, year labels) still set in the sans
+  face. Extending Plex Mono to those would complete the system; not done in the
+  (d)/(e) pass to keep scope contained.
+- **NOT done — framework/standard names on the Credentials tile.** Was proposed
+  in-session (NIST / ISO 27001 / SOC 2 as a GRC-relevance signal), then
+  withdrawn on reading this doc: there is no confirmed record of Amardeep
+  working with any named framework, and the "WCC technology specifics" note
+  above already locks tags as deliberately category-level. Adding them would
+  have been invented scope. **Needs real names from Amardeep before it can be
+  built** — see the open question raised with him 2026-08-23.
+- **2026-08-23 (c) (Real credential logos wired in)** — Amardeep confirmed he
+  has permission for the CompTIA, Mount Royal University, and University of
+  the People marks and supplied the actual files himself (pasted into the
+  session); downloading them was still not something done on his behalf (see
+  entry (b) below — that boundary is about who fetches the file, not whether
+  usage is authorized). Files renamed to kebab-case for consistency with
+  other `public/` assets and saved as `public/comptia-security-plus.svg`,
+  `public/mru-logo.jpg`, `public/uopeople-logo.png`. `credentials` in
+  `site.ts` now carries an optional `logo` field; the homepage badge grid
+  (`index.astro`) renders the real logo image (`object-contain`, no extra
+  icon-circle background since the CompTIA SVG is already a self-contained
+  circular seal) when one is set, falling back to the generic outline icon
+  otherwise. Google Analytics, Google Ads, and HubSpot still use generic
+  icons — no logo files provided for those. If Amardeep supplies more logos
+  later, add the file to `public/` and set `logo` on that credential's entry.
 - **2026-08-23 (b) (Credential org attribution added; official logos declined;
   Master's status corrected)** — Follow-up to the Credentials-tile upgrade
   below, same day. Amardeep asked for the actual official logos (CompTIA,
