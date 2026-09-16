@@ -12,6 +12,10 @@ Read this first in any new session working on the site.
 **Stack:** Astro (static output) + Tailwind CSS v4 + TypeScript. Hosting: Railway
 (planned, not yet deployed from this repo).
 
+**Layout: "Document" (2026-09-15)** — no cards or bento grid; every page is a
+header plus ruled label/content sections (`Section.astro`), hairline-ruled
+lists (`.rows`), and one link style (`.link`). See Decisions Log entry (f).
+
 **Palette B ("Ledger")** — current as of 2026-08-23, supersedes Palette A
 ("Ink & warm white"). Cool blue-grey paper: base `#ECEFF3`, surface `#FBFCFD`,
 quiet surface `#F5F7F9`, ink `#12161C`, **oxblood** accent `#7A2230`.
@@ -26,8 +30,8 @@ toggle over the `blog` and `journal` content collections), `/contact`,
 2026-08-23 (see Decisions Log) — don't re-add without Amardeep asking.
 
 **Nav:** Projects · About · Writing · Contact. No Resume tab — resume
-lives as a download on `/contact`. Mobile collapses to an animated slide-down
-menu (hamburger ↔ ✕).
+lives as a download on `/contact`. Plain non-sticky masthead; on narrow screens
+the links wrap onto a second line (the hamburger menu was removed 2026-09-15).
 
 ### Decisions locked so far
 - **Title: "Technical Consultant — Risk & Compliance"** (was "Technical Project
@@ -186,6 +190,40 @@ not for direct verbatim use as site copy unless he says so.
 ---
 
 ## 3. Decisions log (dated, most recent first)
+
+- **2026-09-15 (f) (Layout language "Document"; copy rewritten in first person)** —
+  Amardeep asked again how to make the site not look vibe coded. The palette and
+  typeface changes in (d)/(e) had removed the colour/type tells but left the
+  structural ones, which are the strongest signals of generated design in 2026:
+  bento grid of bordered cards, pill badges ("Vancouver, Canada", "Open to
+  consulting"), a pulsing status dot, icon-in-a-circle on every list item,
+  eyebrow label on every tile, chips for tags, a two-button hero, "Let's build
+  something." on Contact, a dark copy-email banner, backdrop-blur sticky nav
+  with an animated underline, and a "Problem / What was built / Current state"
+  case-study template. Copy had the same problem: third person, em-dash on
+  nearly every line, tricolons, and "not X, Y" constructions. Changes:
+  - **Layout:** cards removed entirely. Every page is a header plus ruled
+    sections in a two-column label/content grid (`Section.astro`, the site's
+    one structural device); lists are hairline-ruled rows (`.rows`); tags and
+    stacks are a mono line separated by middots, not chips; KPIs are bare
+    figures over a rule, not boxes. `BentoCard.astro` and `Icon.astro` deleted.
+    Page bg moved to the mid value (`--color-surface-quiet`); `.card`, `.tag`,
+    `.link-underline` classes removed; `.link`, `.rows`, `.prose` added.
+  - **Nav:** non-sticky, no blur, no hamburger or script; links wrap on narrow
+    screens. Footer reduced to one line plus links.
+  - **Copy:** first person throughout ("I'm Amardeep Dhillon, a technical
+    consultant in Vancouver working on risk, compliance and workflow
+    automation."). All facts unchanged and still sourced from `site.ts` and
+    this doc; only framing changed. "View work" kept as the primary hero link
+    (decision (d)), "Open to consulting" kept as a sentence on Contact, WCC
+    still KPI-and-tags-led and modest, dating-coach line still buried on
+    About, no project list re-added to the homepage (decision (a)).
+  - **Assets:** `og-default.svg` and `favicon.svg` were still in Palette A /
+    Inter; both redrawn in Palette B. Note: LinkedIn and X do not render SVG
+    OG images at all; a 1200×630 PNG export is still needed before launch.
+  - Revert path: `git revert` this commit. Nothing in `site.ts` facts changed
+    except the tagline losing its em-dash and `wcc` gaining `org`/`role`/
+    `period`/`summary` so `/` and `/projects` share one source.
 
 - **2026-08-23 (d) (Homepage hierarchy rebalance + typeface change)** — Amardeep
   said the homepage type felt oversized, that the WCC KPI tile was crowding the

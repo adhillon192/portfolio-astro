@@ -17,18 +17,18 @@ const initialTab = Astro.url.searchParams.get('tab') === 'personal' ? 'personal'
 ---
 
 <BaseLayout title="Writing" description="Technical write-ups and personal notes.">
-  <header class="mb-6">
-    <h1 class="text-3xl font-semibold tracking-tight">Writing</h1>
-    <p class="mt-3 text-[var(--color-ink-soft)]">
-      Project breakdowns and technical commentary, plus a quieter space for personal notes.
+  <header class="pb-8 sm:pb-10">
+    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Writing</h1>
+    <p class="mt-4 max-w-xl text-[17px] text-[var(--color-ink-soft)]">
+      Project write-ups and technical notes, and a separate journal for everything else.
     </p>
   </header>
 
-  <!-- Toggle -->
+  <!-- Plain text tabs; the selected one carries the oxblood rule. -->
   <div
     role="tablist"
     aria-label="Writing sections"
-    class="mb-8 inline-flex rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] p-1 text-sm"
+    class="mb-8 flex gap-x-6 border-b border-[var(--color-border)] text-[15px]"
   >
     <button
       id="tab-technical"
@@ -36,7 +36,7 @@ const initialTab = Astro.url.searchParams.get('tab') === 'personal' ? 'personal'
       data-tab="technical"
       aria-selected={initialTab === 'technical'}
       aria-controls="panel-technical"
-      class="tab-btn rounded-full px-4 py-1.5 font-medium transition-colors"
+      class="tab-btn -mb-px border-b-2 pb-2.5 transition-colors"
     >
       Technical
     </button>
@@ -46,19 +46,21 @@ const initialTab = Astro.url.searchParams.get('tab') === 'personal' ? 'personal'
       data-tab="personal"
       aria-selected={initialTab === 'personal'}
       aria-controls="panel-personal"
-      class="tab-btn rounded-full px-4 py-1.5 font-medium transition-colors"
+      class="tab-btn -mb-px border-b-2 pb-2.5 transition-colors"
     >
-      Journals
+      Journal
     </button>
   </div>
 
+  <!-- The tab bar already draws the top rule, so the list drops its own. -->
   <section
     id="panel-technical"
     role="tabpanel"
     aria-labelledby="tab-technical"
     hidden={initialTab !== 'technical'}
+    class="[&_.rows]:border-t-0 [&_.rows>li:first-child]:pt-0"
   >
-    <PostList posts={technical} base="/blog" emptyMessage="No posts published yet." />
+    <PostList posts={technical} base="/blog" emptyMessage="Nothing published yet." />
   </section>
 
   <section
@@ -66,17 +68,20 @@ const initialTab = Astro.url.searchParams.get('tab') === 'personal' ? 'personal'
     role="tabpanel"
     aria-labelledby="tab-personal"
     hidden={initialTab !== 'personal'}
+    class="[&_.rows]:border-t-0 [&_.rows>li:first-child]:pt-0"
   >
-    <PostList posts={personal} base="/journal" emptyMessage="No entries published yet." />
+    <PostList posts={personal} base="/journal" emptyMessage="Nothing published yet." />
   </section>
 </BaseLayout>
 
 <style>
   .tab-btn[aria-selected='true'] {
-    background-color: var(--color-ink);
-    color: white;
+    border-color: var(--color-accent);
+    color: var(--color-ink);
+    font-weight: 500;
   }
   .tab-btn[aria-selected='false'] {
+    border-color: transparent;
     color: var(--color-ink-soft);
   }
   .tab-btn[aria-selected='false']:hover {

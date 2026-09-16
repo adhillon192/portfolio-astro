@@ -8,11 +8,9 @@ interface Props {
   description?: string;
   image?: string;
   brandSuffix?: boolean;
-  /** Constrain the main content width; homepage uses the wider bento container. */
-  wide?: boolean;
 }
 
-const { title, description, image, brandSuffix, wide = false } = Astro.props;
+const { title, description, image, brandSuffix } = Astro.props;
 ---
 
 <!doctype html>
@@ -23,18 +21,12 @@ const { title, description, image, brandSuffix, wide = false } = Astro.props;
   <body class="flex min-h-screen flex-col">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-[var(--color-ink)] focus:px-3 focus:py-2 focus:text-sm focus:text-white"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-[var(--color-ink)] focus:px-3 focus:py-2 focus:text-sm focus:text-white"
     >
       Skip to content
     </a>
     <Nav />
-    <main
-      id="main"
-      class:list={[
-        'mx-auto w-full flex-1 px-5 py-12 sm:py-16',
-        wide ? 'max-w-6xl' : 'max-w-3xl',
-      ]}
-    >
+    <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-5 pt-12 pb-8 sm:pt-16">
       <slot />
     </main>
     <Footer />

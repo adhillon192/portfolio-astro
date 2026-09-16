@@ -1,0 +1,28 @@
+---
+/**
+ * A ruled page section: hairline rule on top, a mono label in a narrow left
+ * column, content in the wide right column. On small screens the label sits
+ * above the content. This is the one structural device the site uses.
+ */
+interface Props {
+  label: string;
+  id?: string;
+  /** Render the label as a heading level other than h2 (default). */
+  as?: 'h2' | 'h3' | 'p';
+  class?: string;
+}
+
+const { label, id, as = 'h2', class: className = '' } = Astro.props;
+const Label = as;
+---
+
+<section
+  id={id}
+  class:list={[
+    'grid gap-y-3 border-t border-[var(--color-border)] py-8 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-x-10 md:py-10',
+    className,
+  ]}
+>
+  <Label class="eyebrow md:pt-1">{label}</Label>
+  <div class="min-w-0"><slot /></div>
+</section>

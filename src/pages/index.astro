@@ -1,172 +1,108 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import BentoCard from '@/components/BentoCard.astro';
-import Icon from '@/components/Icon.astro';
+import Section from '@/components/Section.astro';
 import { site, credentials, contactLinks, wcc, fairhand } from '@/data/site';
-
-// Quiet supporting-facts line under the hero tagline — plain text, not another
-// row of pills, so it doesn't read as credential-stacking (reference doc
-// Flaw #4) right under the name. Backs up the tagline's security/governance
-// angle with concrete facts: cert, sector, and prior public-sector experience.
-const heroCredibility = [
-  'CompTIA Security+',
-  'Confidential systems in education',
-  'Previously City of Calgary',
-];
 ---
 
-<BaseLayout title="Amardeep Dhillon — Technical Consultant" brandSuffix={false} wide>
+<BaseLayout title="Amardeep Dhillon — Technical Consultant" brandSuffix={false}>
   <!--
-    Bento grid (Spec §5). 4 columns on desktop, single stacked column on mobile.
-    Tiles are ordered by priority so the mobile stack keeps the same reading order.
+    The page reads top to bottom as a short document: who, what now, what backs
+    it up, and where to go next. No tiles, no badges. Credentials keep their
+    own ruled section near the top per Amardeep's request that they carry
+    weight (knowledge-base.md, 2026-08-23 (a)).
   -->
-  <div class="grid grid-cols-1 gap-4 md:grid-cols-4 md:auto-rows-[minmax(0,auto)] md:grid-flow-row-dense">
-    <!-- 1. Hero (largest) -->
-    <BentoCard span={2} rows={2} tone="raised" class="justify-between">
-      <div>
-        <div class="flex flex-wrap gap-2">
-          <span
-            class="rounded-full border border-[var(--color-border-strong)] px-2.5 py-0.5 text-xs text-[var(--color-ink-soft)]"
-          >
-            {site.location}
-          </span>
-          <span
-            class="rounded-full bg-[var(--color-accent-soft)] px-2.5 py-0.5 text-xs font-medium text-[var(--color-accent-ink)]"
-          >
-            Open to consulting
-          </span>
-        </div>
-        <h1 class="mt-6 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-          {site.name}
-        </h1>
-        <p class="mt-4 max-w-md text-lg text-[var(--color-ink-soft)] text-pretty">
-          {site.tagline}
-        </p>
-        <p class="mt-3 max-w-md text-xs text-[var(--color-ink-faint)]">
-          {heroCredibility.join(' · ')}
-        </p>
-      </div>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a
-          href="/projects"
-          class="rounded-lg bg-[var(--color-ink)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-        >
-          View work
-        </a>
-        <a
-          href="/about"
-          class="rounded-lg border border-[var(--color-border-strong)] px-4 py-2 text-sm font-medium text-[var(--color-ink)] transition-colors hover:border-[var(--color-ink)]"
-        >
-          About
-        </a>
-      </div>
-    </BentoCard>
+  <header class="pb-10 sm:pb-14">
+    <h1 class="max-w-2xl text-[1.7rem] leading-[1.25] tracking-tight text-balance sm:text-[2.35rem]">
+      I'm Amardeep Dhillon, a technical consultant in Vancouver working on risk, compliance and
+      workflow automation.
+    </h1>
+    <p class="mt-6 max-w-xl text-[17px] leading-relaxed text-[var(--color-ink-soft)] text-pretty">
+      Right now that's at {wcc.org}, where I automate internal workflows and run technical
+      audits of the college's systems. Before this I was at the City of Calgary. I hold CompTIA
+      Security+ and a degree in computer information systems, and I take on consulting work
+      alongside the role.
+    </p>
+    <p class="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-[15px] font-medium">
+      <a href="/projects" class="link">View work</a>
+      <a href="/contact" class="link">Get in touch</a>
+    </p>
+  </header>
 
-    <!-- 2. Current work / WCC — strongest tile, real visual weight -->
-    <BentoCard span={2} rows={2} tone="raised" eyebrow="Current work" class="justify-between">
-      <div>
-        <h2 class="text-lg font-semibold tracking-tight sm:text-xl md:whitespace-nowrap">Western Community College</h2>
-        <!-- Scale figures live in the KPI tiles below, so this line no longer
-             repeats them — it carries the role and the scope of work instead. -->
-        <p class="mt-2 text-sm text-[var(--color-ink-soft)]">
-          Technical Consultant — Risk &amp; Compliance. Workflow automation and technical
-          audits across the college's internal systems, plus some website work on the side.
-        </p>
+  <Section label="Currently">
+    <h3 class="font-medium leading-snug">{wcc.role}, {wcc.org}</h3>
+    <p class="meta mt-1">{wcc.period}</p>
+    <p class="mt-3 max-w-lg text-[var(--color-ink-soft)]">{wcc.summary}</p>
 
-        <!-- KPI callouts (replaces the long paragraph). Kept compact on purpose:
-             this tile sits above the fold and shouldn't out-weigh Credentials
-             below it, which is where the authority signal actually lives. -->
-        <dl class="mt-4 grid grid-cols-2 gap-2">
-          {
-            wcc.kpis.map((kpi) => (
-              <div class="rounded-lg bg-[var(--color-base)] p-2.5">
-                <dt class="figure text-lg">{kpi.value}</dt>
-                <dd class="mt-0.5 text-xs leading-snug text-[var(--color-ink-soft)]">
-                  {kpi.label}
-                </dd>
-              </div>
-            ))
-          }
-        </dl>
-      </div>
+    <!-- Scale, not outcomes. See the note on `wcc` in site.ts. -->
+    <dl class="mt-6 grid max-w-md grid-cols-2 gap-x-8">
+      {
+        wcc.kpis.map((kpi) => (
+          <div class="border-t border-[var(--color-border-strong)] pt-2.5">
+            <dt class="figure text-2xl leading-none">{kpi.value}</dt>
+            <dd class="mt-1.5 text-[13px] leading-snug text-[var(--color-ink-soft)]">{kpi.label}</dd>
+          </div>
+        ))
+      }
+    </dl>
 
-      <!-- Technical tags (replaces the department pills) -->
-      <ul class="mt-5 flex flex-wrap gap-1.5">
-        {wcc.tags.map((tag) => <li class="tag">{tag}</li>)}
-      </ul>
-    </BentoCard>
+    <p class="meta mt-6">{wcc.tags.join(' · ')}</p>
+  </Section>
 
-    <!-- 3. Credentials — full-width so certifications carry real visual weight,
-         not an afterthought. Placed right after WCC per Amardeep's direct
-         request to lead with these; widened to span 4 when the Now / On repeat
-         tiles were dropped, which also keeps the grid perfectly packed. -->
-    <BentoCard span={4} tone="recessed" eyebrow="Credentials">
-      <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          credentials.map((c) => (
-            <li class="flex items-center gap-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3">
-              <span class="flex h-10 w-10 shrink-0 items-center justify-center">
-                {c.logo ? (
-                  <img
-                    src={c.logo}
-                    alt={`${c.org ?? c.label} logo`}
-                    class="h-10 w-10 object-contain"
-                    loading="lazy"
-                  />
-                ) : (
-                  <span class="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-[var(--color-accent-ink)]">
-                    <Icon name={c.icon} class="h-5 w-5" />
-                  </span>
-                )}
-              </span>
-              <div class="min-w-0">
-                <p class="text-sm font-medium text-[var(--color-ink)]">{c.label}</p>
-                {(c.org || c.status === 'in progress') && (
-                  <p class="text-xs text-[var(--color-ink-faint)]">
-                    {[c.org, c.status === 'in progress' ? 'In progress' : null]
-                      .filter(Boolean)
-                      .join(' · ')}
-                  </p>
-                )}
-              </div>
-            </li>
-          ))
-        }
-      </ul>
-    </BentoCard>
+  <Section label="Credentials">
+    <ul class="rows -mt-1">
+      {
+        credentials.map((c) => (
+          <li class="flex items-center justify-between gap-4 py-3">
+            <div class="min-w-0">
+              <p class="leading-snug">{c.label}</p>
+              {(c.org || c.status === 'in progress') && (
+                <p class="meta mt-0.5">
+                  {[c.org, c.status === 'in progress' ? 'In progress' : null]
+                    .filter(Boolean)
+                    .join(' · ')}
+                </p>
+              )}
+            </div>
+            {c.logo && (
+              <img
+                src={c.logo}
+                alt=""
+                class="h-8 w-8 shrink-0 object-contain mix-blend-multiply"
+                loading="lazy"
+              />
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
 
-    <!-- 4. Fairhand — the studio, not a "Project": different eyebrow, no stack
-         tags/live link since it's an entity, not a shipped build. Projects
-         (including Velarisse) live on /projects, not the homepage bento. -->
-    <BentoCard span={2} tone="quiet" eyebrow="Studio" class="justify-between">
-      <div>
-        <h2 class="text-xl font-semibold tracking-tight">{fairhand.name}</h2>
-        <p class="mt-1 text-xs font-medium text-[var(--color-accent-ink)]">{fairhand.role}</p>
-        <p class="mt-2 text-sm text-[var(--color-ink-soft)]">{fairhand.oneLiner}</p>
-      </div>
-    </BentoCard>
+  <!-- The studio, not a "project": Finlador's equity sits here. Projects live on /projects. -->
+  <Section label="Studio">
+    <h3 class="font-medium leading-snug">{fairhand.name}</h3>
+    <p class="meta mt-1">{fairhand.role}</p>
+    <p class="mt-3 max-w-lg text-[var(--color-ink-soft)]">
+      A small technology studio, and the founding entity behind
+      <a href="/projects" class="link">Finlador</a>.
+    </p>
+  </Section>
 
-    <!-- 5. Contact / linktree — icon per link. Widened to span 2 to pair with
-         Fairhand on the closing row. -->
-    <BentoCard span={2} tone="quiet" eyebrow="Contact">
-      <ul class="flex flex-col gap-2.5 text-sm">
-        {
-          contactLinks.map((link) => (
-            <li>
-              <a
-                href={link.href}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                class="group flex items-center gap-2.5 text-[var(--color-ink)]"
-              >
-                <span class="text-[var(--color-ink-soft)] transition-colors group-hover:text-[var(--color-accent-ink)]">
-                  <Icon name={link.icon} class="h-4 w-4" />
-                </span>
-                <span class="link-underline">{link.label}</span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </BentoCard>
-  </div>
+  <Section label="Elsewhere">
+    <ul class="rows -mt-1">
+      {
+        contactLinks.map((link) => (
+          <li class="flex flex-wrap items-baseline justify-between gap-x-4 py-3">
+            <a
+              href={link.href}
+              class="link"
+              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            >
+              {link.label}
+            </a>
+            <span class="meta">{link.hint}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
 </BaseLayout>

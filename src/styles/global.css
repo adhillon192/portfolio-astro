@@ -1,33 +1,27 @@
 @import 'tailwindcss';
 
 /*
-  Design system — Palette B: "Ledger" (supersedes Spec §4 "Ink & warm white",
-  changed 2026-08-23).
+  Design system — Palette B "Ledger" (2026-08-23), layout language "Document"
+  (2026-09-15).
 
-  The old palette was warm cream + amber. That combination is one of the most
-  common signatures of generic AI-generated design, which is exactly the
-  "vibe coded" read Amardeep flagged — it was the safe answer rather than a
-  chosen one. This palette commits the other way on both axes:
+  Colour: cool pale blue-grey paper and a single oxblood accent. Neutrals carry
+  90%+ of the UI. No gradients, no drop shadows.
 
-  - Paper is COOL, not warm — a pale blue-grey that reads archival/records
-    rather than cosy-blog.
-  - The accent is OXBLOOD — the colour of seals, ledgers and legal binding.
-    It carries institutional gravity without the corporate-blue cliché, and
-    it's nowhere near the amber/terracotta or acid-green defaults.
-
-  Still exactly one accent, still neutrals for ~90%+ of the UI, still no
-  gradients. Depth is carried by surface VALUE (see the .card tones below),
-  not by drop shadows. Light mode only for v1.
+  Layout: the site is set as a document, not a dashboard. There are no cards.
+  Sections are separated by hairline rules and use a two-column label/content
+  grid (see Section.astro). Hierarchy comes from type size, weight and spacing;
+  the mono face is reserved for readings and labels (section labels, dates,
+  figures, stack lists), never for sentences.
 */
 @theme {
   /* Neutrals — cool "ledger paper" */
-  --color-base: #eceff3; /* page background — the recessed value */
-  --color-surface: #fbfcfd; /* card / raised surface — the lightest value */
-  --color-surface-quiet: #f5f7f9; /* mid value, for lower-priority tiles */
+  --color-base: #eceff3; /* recessed insets, hairlines on hover */
+  --color-surface: #fbfcfd; /* lightest value — unused as a page bg, kept for chips */
+  --color-surface-quiet: #f5f7f9; /* page background */
   --color-ink: #12161c; /* primary text — cool near-black */
   --color-ink-soft: #454e5a; /* secondary text */
   --color-ink-faint: #5d6773; /* tertiary / captions — AA-safe on all surfaces */
-  --color-border: #dce1e7; /* subtle card border */
+  --color-border: #dce1e7; /* hairline rules */
   --color-border-strong: #c3cad3;
 
   /* Single accent — oxblood */
@@ -35,21 +29,11 @@
   --color-accent-ink: #6b1e2b; /* accent text on light bg (AA-safe) */
   --color-accent-soft: #f1e5e7; /* accent-tinted fill */
 
-  /*
-    Type — two families, each with one job (was: Inter alone).
-    IBM Plex Sans carries all prose. IBM Plex Mono is reserved for *instrument
-    voice* only: section eyebrows, KPI figures, and technical tags — the parts
-    of the page that are readings and labels rather than sentences. Plex was
-    drawn for an enterprise-technology context and reads institutional rather
-    than startup-default, which is the register this site is pitching into.
-  */
+  /* Type — IBM Plex Sans for prose, IBM Plex Mono for readings and labels. */
   --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system,
     'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, 'SF Mono',
     Menlo, Consolas, monospace;
-
-  /* Radius — consistent 12–16px on cards */
-  --radius-card: 14px;
 }
 
 html {
@@ -57,72 +41,34 @@ html {
 }
 
 body {
-  background-color: var(--color-base);
+  background-color: var(--color-surface-quiet);
   color: var(--color-ink);
   font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Keyboard focus is visible and uses the accent (accessibility, Spec §8). */
+/* Keyboard focus is visible and uses the accent. */
 :focus-visible {
   outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline-offset: 3px;
 }
 
-/* Shared building blocks */
 @layer components {
-  /*
-    Tile tones. Previously every tile was one identical surface, so the page
-    read as a single flat texture and hierarchy lived only in font size.
-    Now prominence is encoded in the surface VALUE — lighter sits forward,
-    darker recedes — which gives depth without reaching for drop shadows
-    (shadows on every card being another generic-template tell).
-
-      .card            default   — mid-priority tiles
-      .card--raised    lightest  — primary tiles (Hero, current work)
-      .card--quiet     mid       — low-priority tiles, recede slightly
-      .card--recessed  darkest   — inverts the nesting: the tile sits back and
-                                   its CONTENTS come forward as light chips.
-                                   Used for the Credentials band so it reads as
-                                   a distinct section rather than one more card.
-  */
-  .card {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-card);
-  }
-
-  .card--quiet {
-    background-color: var(--color-surface-quiet);
-  }
-
-  .card--recessed {
-    background-color: var(--color-base);
-    border-color: var(--color-border-strong);
-  }
-
-  /*
-    "Instrument voice" — the shared mono treatment for content that is READ AS
-    DATA rather than as language. Extracted here (rather than repeating the
-    utility stack) so the rule stays consistent as pages are added.
-
-    In scope: section labels, figures, dates, tags.
-    Out of scope: links and prose. URLs are navigation targets, not readings,
-    and they already carry the accent colour + underline — putting them in mono
-    too would add a third texture to cards that are busy enough.
-  */
+  /* Section labels and column headings: mono, small caps tracking. */
   .eyebrow {
     font-family: var(--font-mono);
     font-size: 11px;
     font-weight: 500;
+    line-height: 1.5;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     color: var(--color-ink-faint);
   }
 
-  /* Figures: mono + tabular so digits align across a row of KPI tiles. */
+  /* Figures: mono + tabular so digits align across a row. */
   .figure {
     font-family: var(--font-mono);
     font-weight: 500;
@@ -131,38 +77,118 @@ body {
     color: var(--color-ink);
   }
 
-  /* Dates / years / small metadata readings. */
+  /* Dates, years, stack lists, small metadata readings. */
   .meta {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 12.5px;
+    line-height: 1.6;
     color: var(--color-ink-faint);
   }
 
-  .tag {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    border-radius: 4px;
-    background-color: var(--color-base);
-    padding: 0.125rem 0.5rem;
-    color: var(--color-ink-faint);
+  /* The one link style. Hairline underline that turns oxblood on hover. */
+  .link {
+    color: var(--color-ink);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--color-border-strong);
+    text-underline-offset: 4px;
+    transition:
+      text-decoration-color 120ms ease,
+      color 120ms ease;
   }
-
-  /* Post topic tags. Same voice, accent fill — the colour is what separates a
-     subject tag from the neutral tech-stack tags on /projects. */
-  .tag--accent {
-    border-radius: 9999px;
-    background-color: var(--color-accent-soft);
+  .link:hover {
     color: var(--color-accent-ink);
+    text-decoration-color: var(--color-accent);
   }
 
-  .link-underline {
+  /* Hairline-ruled list rows, used for credentials, experience, posts, links. */
+  .rows {
+    border-top: 1px solid var(--color-border);
+  }
+  .rows > * {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* Long-form post body. */
+  .prose {
+    color: var(--color-ink);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .prose > * + * {
+    margin-top: 1.25em;
+  }
+  .prose h2 {
+    margin-top: 2.25em;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  .prose h3 {
+    margin-top: 1.75em;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .prose h2 + *,
+  .prose h3 + * {
+    margin-top: 0.6em;
+  }
+  .prose a {
+    color: var(--color-ink);
     text-decoration-line: underline;
     text-decoration-color: var(--color-border-strong);
-    text-underline-offset: 3px;
-    transition: text-decoration-color 150ms ease;
+    text-underline-offset: 4px;
   }
-  .link-underline:hover {
+  .prose a:hover {
+    color: var(--color-accent-ink);
     text-decoration-color: var(--color-accent);
+  }
+  .prose ul,
+  .prose ol {
+    padding-left: 1.4em;
+  }
+  .prose ul {
+    list-style: disc;
+  }
+  .prose ol {
+    list-style: decimal;
+  }
+  .prose li + li {
+    margin-top: 0.35em;
+  }
+  .prose code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background-color: var(--color-base);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+  .prose pre {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    line-height: 1.6;
+    background-color: var(--color-base);
+    padding: 1rem 1.25rem;
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+  .prose pre code {
+    background: none;
+    padding: 0;
+  }
+  .prose blockquote {
+    border-left: 2px solid var(--color-border-strong);
+    padding-left: 1.25rem;
+    color: var(--color-ink-soft);
+  }
+  .prose hr {
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    margin: 2.5em 0;
+  }
+  .prose img {
+    border-radius: 4px;
   }
 }
 
