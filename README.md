@@ -1,6 +1,6 @@
 # portfolio-astro
 
-Personal portfolio site for Amardeep Dhillon. Built with **Astro + Tailwind CSS + TypeScript**, per `site-build-spec-v1.md`. Static output, light-mode only. Palette B ("Ledger": cool blue-grey paper, oxblood accent) and a document-style layout: no cards, ruled label/content sections (`Section.astro`), IBM Plex Sans for prose and IBM Plex Mono for labels, dates and figures.
+Personal portfolio site for Amardeep Dhillon. Built with **Astro + Tailwind CSS + TypeScript**, per `site-build-spec-v1.md`. Static output, light-mode only (Palette A — "Ink & warm white", amber accent).
 
 **Start here:** [`knowledge-base.md`](knowledge-base.md) is the living reference for current build status, locked decisions, open items, and Amardeep's personal context (voice/interests) — read it before making content changes. `portfolio-reference-v1.md`, `site-build-spec-v1.md`, and `second-blog-plan.md` are the original pre-build planning docs (historical, superseded where the knowledge base says so).
 
@@ -22,7 +22,7 @@ src/
   content/blog/           Professional blog posts (markdown)
   content/journal/        Personal journal posts (markdown)
   layouts/                BaseLayout, PostLayout
-  components/             Nav, Footer, BaseHead (SEO/OG/GA), Section (ruled label/content block), PostList
+  components/             Nav, Footer, BaseHead (SEO/OG/GA), BentoCard, PostList
   pages/                  Routes (see below)
 public/                   favicon.svg, og-default.svg, resume.pdf (placeholder)
 ```
@@ -31,7 +31,7 @@ public/                   favicon.svg, og-default.svg, resume.pdf (placeholder)
 
 | Path | Description |
 |------|-------------|
-| `/` | Homepage — intro, current role, credentials, studio, links |
+| `/` | Homepage — bento grid (7 tiles) |
 | `/projects` | Case studies (Finlador, Velarisse, WCC) + hackathons strip |
 | `/about` | Bio, education, certs, career narrative |
 | `/writing` | Unified writing hub with a Technical / Journals toggle |
@@ -42,8 +42,8 @@ public/                   favicon.svg, og-default.svg, resume.pdf (placeholder)
 | `/resume.pdf` | Downloadable resume (placeholder) — linked from Contact |
 
 `/blog` and `/journal` redirect to `/writing` (kept for old links). The top nav
-is: Projects · About · Writing · Contact. It is a plain, non-sticky masthead; on
-narrow screens the links wrap onto a second line (no hamburger, no script).
+is: Projects · About · Writing · Contact. On mobile it collapses to an
+animated slide-down menu (hamburger → ✕).
 
 ## Analytics
 

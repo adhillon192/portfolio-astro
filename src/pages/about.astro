@@ -1,116 +1,102 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Section from '@/components/Section.astro';
-import { credentials, wcc } from '@/data/site';
 
 // Career narrative (Spec §7). No military/PR intent stated on this page (Spec §7).
 const experience = [
   {
-    role: wcc.role,
-    org: wcc.org,
-    period: wcc.period,
+    role: 'Technical Consultant — Risk & Compliance',
+    org: 'Western Community College',
+    period: 'Mar 2026 — present',
     detail:
-      'Cross-functional workflow automation across Admissions, Registrar, Records, Marketing and Finance at a 300-plus staff, roughly $50M a year institution. Coding, technical consulting for internal stakeholders, and project coordination.',
+      'Cross-functional workflow automation across Admissions, Registrar, Records, Marketing, and Finance at a 300+ staff, ~$50M/yr institution. Coding, technical consulting for internal stakeholders, and project coordination.',
   },
   {
-    role: 'Software Developer (casual, remote)',
+    role: 'Software Developer (Casual, Remote)',
     org: 'DentHire',
-    period: 'Jan 2026 – Apr 2026',
+    period: 'Jan 2026 — Apr 2026',
     detail:
-      'Full-stack development on a dental staffing platform: job postings, candidate matching and practice management. React and Node.js, working with product, design and business teams.',
+      'Full-stack development on a dental staffing platform — job postings, candidate matching, practice management. React + Node.js, working cross-functionally with product, design, and business teams.',
   },
   {
     role: 'Content Developer',
     org: 'City of Calgary',
-    period: 'Jan 2024 – Jul 2024',
+    period: 'Jan 2024 — Jul 2024',
     detail:
-      'Coordinated the operational launch of a Technology Integration Center in the Smart Cities division. Liaised between city officials, technology vendors and community stakeholders, and produced AR/VR emerging-technology research and briefings for decision-makers.',
+      'Coordinated the operational launch of a Technology Integration Center in the Smart Cities division; liaised between city officials, tech vendors, and community stakeholders; produced AR/VR emerging-tech research and briefings for decision-makers.',
   },
   {
     role: 'Campaign Lead',
     org: 'Student Changemaker Network',
-    period: 'Sep 2023 – Sep 2024',
+    period: 'Sep 2023 — Sep 2024',
     detail:
-      'Led campus sustainability initiatives, maintained relationships with 15-plus internal and external stakeholders, and ran media and communications strategy.',
+      'Led campus sustainability initiatives, built and maintained relationships with 15+ internal and external stakeholders, and ran media and communications strategy.',
   },
 ] as const;
-
-// Degrees are listed under Education; everything else under Certifications.
-const isDegree = (label: string) => label.startsWith('B.Sc.') || label.startsWith("Master's");
-const education = credentials.filter((c) => isDegree(c.label));
-const certs = credentials.filter((c) => !isDegree(c.label));
-const status = (c: (typeof credentials)[number]) =>
-  [c.org, c.status === 'in progress' ? 'In progress' : null].filter(Boolean).join(' · ');
 ---
 
-<BaseLayout
-  title="About"
-  description="Education, certifications, and a career narrative bridging technical execution and business problem-solving."
->
-  <header class="pb-8 sm:pb-10">
-    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">About</h1>
-    <div class="mt-5 max-w-xl space-y-4 text-[17px] leading-relaxed text-[var(--color-ink-soft)] text-pretty">
-      <p>
-        I'm a Technical Consultant in Risk and Compliance at Western Community College, a
-        300-plus staff institution with about $50M in annual revenue. The work is hands-on:
-        coding, automation and technical consulting for people inside the college, approached
-        with governance in mind rather than bolted on afterwards.
-      </p>
-      <p>I also run Fairhand, a small technology studio.</p>
-    </div>
+<BaseLayout title="About" description="Education, certifications, and a career narrative bridging technical execution and business problem-solving.">
+  <header class="mb-10">
+    <h1 class="text-3xl font-semibold tracking-tight">About</h1>
+    <p class="mt-4 text-lg text-[var(--color-ink-soft)] text-pretty">
+      Technical Consultant — Risk & Compliance at Western Community College, bridging
+      hands-on software work with governance-minded business problem-solving — coding,
+      automation, and technical consulting for a 300+ staff, ~$50M/yr institution.
+    </p>
+    <p class="mt-3 text-sm text-[var(--color-ink-faint)]">
+      Also Founder of Fairhand, a small technology studio.
+    </p>
   </header>
 
-  <Section label="Education">
-    <ul class="rows -mt-1">
-      {
-        education.map((c) => (
-          <li class="py-3">
-            <p class="leading-snug">{c.label}</p>
-            <p class="meta mt-0.5">{status(c)}</p>
-          </li>
-        ))
-      }
-    </ul>
-  </Section>
+  <section class="mb-10">
+    <h2 class="eyebrow">
+      Education
+    </h2>
+    <p class="mt-3 text-[var(--color-ink)]">
+      Bachelor of Computer Information Systems — Mount Royal University
+    </p>
+  </section>
 
-  <Section label="Certifications">
-    <ul class="rows -mt-1">
-      {
-        certs.map((c) => (
-          <li class="flex flex-wrap items-baseline justify-between gap-x-4 py-3">
-            <p class="leading-snug">{c.label}</p>
-            {status(c) && <p class="meta">{status(c)}</p>}
-          </li>
-        ))
-      }
+  <section class="mb-10">
+    <h2 class="eyebrow">
+      Certifications
+    </h2>
+    <ul class="mt-3 flex flex-col gap-1.5 text-[var(--color-ink-soft)]">
+      <li>CompTIA Security+</li>
+      <li>Google Analytics · Google Ads</li>
+      <li>HubSpot <span class="text-sm text-[var(--color-ink-faint)]">(in progress)</span></li>
+      <li>
+        Master's in Information Technology — University of the People
+        <span class="text-sm text-[var(--color-ink-faint)]">(in progress)</span>
+      </li>
     </ul>
-  </Section>
+  </section>
 
-  <Section label="Experience">
-    <ol class="rows -mt-1">
+  <section>
+    <h2 class="eyebrow">
+      Experience
+    </h2>
+    <ol class="mt-4 flex flex-col gap-6">
       {
         experience.map((job) => (
-          <li class="grid gap-y-1 py-4 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-x-8">
-            <p class="meta md:pt-0.5">{job.period}</p>
-            <div>
-              <h3 class="font-medium leading-snug">{job.role}</h3>
-              <p class="meta mt-0.5">{job.org}</p>
-              <p class="mt-2 max-w-lg text-[15px] leading-relaxed text-[var(--color-ink-soft)]">
-                {job.detail}
-              </p>
+          <li class="border-l-2 border-[var(--color-border-strong)] pl-4">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-3">
+              <h3 class="font-medium text-[var(--color-ink)]">
+                {job.role} · {job.org}
+              </h3>
+              <span class="meta">{job.period}</span>
             </div>
+            <p class="mt-1.5 text-sm leading-relaxed text-[var(--color-ink-soft)]">{job.detail}</p>
           </li>
         ))
       }
     </ol>
     {/* PROVISIONAL — Community Support Worker line (Alex Community Centre, Jul–Dec 2025)
         intentionally omitted pending the include/exclude decision (Spec §7 / Open Items).
-        Add here as one row if the reliability/service angle is wanted. */}
-  </Section>
+        Add here as one line if the reliability/service angle is wanted. */}
+  </section>
 
-  <!-- Deliberately low-key and hard to discover; don't move it (knowledge-base.md §1). -->
-  <p class="mt-10 text-xs text-[var(--color-ink-faint)]">
-    I also coach 1-on-1 dating communication on the side:
-    <a href="https://datingcoach.adhillon.net" rel="noopener noreferrer" class="link">datingcoach.adhillon.net</a>.
+  <p class="mt-16 text-xs text-[var(--color-ink-faint)]">
+    Also coach 1-on-1 dating communication on the side —
+    <a href="https://datingcoach.adhillon.net" rel="noopener noreferrer" class="link-underline">datingcoach.adhillon.net</a>.
   </p>
 </BaseLayout>

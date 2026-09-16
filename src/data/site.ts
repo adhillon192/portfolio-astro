@@ -8,11 +8,14 @@
 
 export const site = {
   name: 'Amardeep Dhillon',
-  // Security/governance angle made explicit 2026-06-30 per Amardeep's direction
-  // (see knowledge-base.md §1). Used for the meta description and /links.
+  // Updated 2026-06-30 per Amardeep's direction to make the security/governance
+  // angle explicit — previously said only "bridging hands-on software and
+  // business automation," which didn't match how he actually pitches himself
+  // (see knowledge-base.md §1, hero-tagline review finding). Copy can still
+  // evolve, but this is a real decision now, not a placeholder.
   tagline:
-    'Technical consultant for business automation, with a security- and governance-minded approach.',
-  role: 'Technical Consultant, Risk & Compliance',
+    'Technical consultant for business automation — built with a security- and governance-minded approach.',
+  role: 'Technical Consultant — Risk & Compliance',
   location: 'Vancouver, Canada',
   email: 'contact@adhillon.net',
   url: 'https://adhillon.net',
@@ -35,78 +38,85 @@ export const nav: NavItem[] = [
   { href: '/contact', label: 'Contact' },
 ];
 
-/**
- * Credentials, in the order they appear on the homepage. `logo` is only set
- * where Amardeep has supplied the file himself (knowledge-base.md, 2026-08-23
- * entries (b)/(c)); entries without one render as text only.
- */
 export const credentials = [
   {
     label: 'CompTIA Security+',
     org: null,
     status: 'certified' as const,
+    icon: 'shield' as const,
     logo: '/comptia-security-plus.svg',
   },
   {
     label: 'B.Sc. Computer Information Systems',
     org: 'Mount Royal University',
     status: 'certified' as const,
+    icon: 'graduation-cap' as const,
     logo: '/mru-logo.jpg',
   },
   {
     label: 'Google Analytics',
     org: null,
     status: 'certified' as const,
+    icon: 'chart' as const,
     logo: null,
   },
   {
     label: 'Google Ads',
     org: null,
     status: 'certified' as const,
+    icon: 'target' as const,
     logo: null,
   },
   {
     label: 'HubSpot',
     org: null,
     status: 'in progress' as const,
+    icon: 'spark' as const,
     logo: null,
   },
   {
     label: "Master's in Information Technology",
     org: 'University of the People',
     status: 'in progress' as const,
+    icon: 'graduation-cap' as const,
     logo: '/uopeople-logo.png',
   },
 ];
 
-export const contactLinks: { label: string; href: string; hint: string }[] = [
-  { label: 'Email', href: 'mailto:contact@adhillon.net', hint: 'contact@adhillon.net' },
-  { label: 'LinkedIn', href: site.linkedin, hint: 'in/amardeep-dhillon' },
-  { label: 'GitHub', href: site.github, hint: 'github.com/adhillon192' },
-  { label: 'Resume', href: '/resume.pdf', hint: 'PDF' },
+// Mirror of the icon names supported by Icon.astro.
+export type IconName = 'mail' | 'linkedin' | 'github' | 'file' | 'link';
+
+export const contactLinks: {
+  label: string;
+  href: string;
+  hint: string;
+  icon: IconName;
+}[] = [
+  { label: 'Email', href: 'mailto:contact@adhillon.net', hint: 'contact@adhillon.net', icon: 'mail' },
+  { label: 'LinkedIn', href: site.linkedin, hint: 'in/amardeep-dhillon', icon: 'linkedin' },
+  { label: 'GitHub', href: site.github, hint: 'github.com/adhillon192', icon: 'github' },
+  { label: 'Resume', href: '/resume.pdf', hint: 'PDF download', icon: 'file' },
 ];
 
 /**
- * Western Community College — current role, shown on / and /projects.
+ * Western Community College — homepage tile content.
  *
- * The two figures describe the SCALE Amardeep operates at, not outcomes he
+ * These two figures describe the SCALE Amardeep operates at, not outcomes he
  * produced — they're institutional facts about the college, defensible on the
- * spot in an interview. Impact claims were pulled 2026-08-23 until he confirms
- * real figures.
+ * spot in an interview. That framing is deliberate (2026-08-23): the tile
+ * previously also carried "100s hrs/yr of manual reporting eliminated" and
+ * "5 departments unified", which are impact claims that were still marked
+ * placeholder. Rather than pitch with numbers he couldn't source, those two
+ * were pulled until he confirms real figures.
  *
  * TODO(Amardeep): supply real impact numbers and add them back here — this is
  * the strongest proof point on the site and it's currently under-selling.
  *
- * Don't pad this out with softer claims to fill the space (Spec §9). Website
- * work is a small side thing alongside the core automation/audit role, not a
- * flagship "rebuild" — keep it framed that way, tag list stays short.
+ * Don't pad this list out with softer claims to fill the space (Spec §9).
+ * Website work is a small side thing alongside the core automation/audit
+ * role, not a flagship "rebuild" — keep it framed that way, tag list stays short.
  */
 export const wcc = {
-  org: 'Western Community College',
-  role: site.role,
-  period: 'Mar 2026 – present',
-  summary:
-    "Workflow automation and technical audits across the college's internal systems, plus some website work on the side.",
   kpis: [
     { value: '$50M', label: 'annual revenue, institution-wide' },
     { value: '300+', label: 'staff supported' },
@@ -123,10 +133,10 @@ export const wcc = {
 export const fairhand = {
   name: 'Fairhand',
   role: 'Founder',
-  oneLiner: 'A small technology studio, and the founding entity behind Finlador.',
+  oneLiner: 'A small technology studio — the founding entity behind Finlador.',
 } as const;
 
-/** Featured projects: surfaced on /projects and /links. */
+/** Featured projects surfaced on the homepage bento + /projects case studies. */
 export const projects = [
   {
     slug: 'finlador',
@@ -137,7 +147,7 @@ export const projects = [
     year: 'Feb 2025',
     live: 'https://finlador.com',
     oneLiner:
-      'A niche marketplace connecting outdoor guides and outfitters with clients booking high-value hunting trips.',
+      'Niche marketplace connecting outdoor guides and outfitters with clients booking high-value hunting trips (~$5K/week, 50 curated members).',
     // PROVISIONAL — stack has flipped Next.js/Astro in the docs; reference doc
     // treats Next.js as final but flags a repo gut-check before publishing.
     // "Postgres" used instead of "Supabase" per preference (Supabase is Postgres).
@@ -151,7 +161,7 @@ export const projects = [
     year: 'Jan 2025',
     live: 'https://velarisseleather.com',
     oneLiner:
-      'An online storefront for a handcrafted leather goods brand: cart, real-time tax, shipping options and product filtering.',
+      'E-commerce platform for a handcrafted leather goods brand — cart, real-time tax, shipping options, and product filtering.',
     stack: ['Next.js', 'TypeScript', 'Tailwind'],
     featured: true,
   },
@@ -170,7 +180,7 @@ export const hackathons = [
     name: 'Secure Student',
     event: 'MRU Hacks 2023',
     year: 'Oct 2023',
-    oneLiner: 'Cross-platform app with role-based secure auth for admins, teachers and students.',
+    oneLiner: 'Cross-platform app with role-based secure auth for admins, teachers, and students.',
     live: 'https://mruhacks2023.adhillon.net',
   },
 ] as const;
